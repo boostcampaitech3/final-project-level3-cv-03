@@ -3,7 +3,7 @@ from fastapi.param_functions import Depends
 from pydantic import BaseModel
 from typing import List,Optional
 
-from app.model import get_beautygan, transfer
+from back_fastapi.app.model import get_beautygan, transfer
 
 app = FastAPI()
 

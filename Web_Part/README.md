@@ -9,7 +9,7 @@ FastAPI을 이용한 모델 온라인 서빙
      
    2. 프로젝트의 의존성을 설치합니다
         ```shell
-        > pip install -r requirements.txt 
+        > pip install -r requirements_web.txt 
         ```
    3. 아래 url에 들어가서 beautygan의 가중치를 models 폴더 안으로 다운받습니다.  
       https://drive.google.com/drive/folders/1pgVqnF2-rnOxcUQ3SO4JwHUFTdiSe5t9

@@ -8,7 +8,7 @@ import io
 
 
 detector = dlib.get_frontal_face_detector()  # 얼굴 영역 인식 모델 로드
-sp = dlib.shape_predictor("../models/shape_predictor_5_face_landmarks.dat")
+sp = dlib.shape_predictor("./models/shape_predictor_5_face_landmarks.dat")
 
 
 def preprocess(img):
