@@ -251,7 +251,7 @@ if __name__=='__main__':
     save_wrong_image = True
 
     # Load actor names from csv file
-    df_actors = pd.read_csv('드라마 리스트업.csv')
+    df_actors = pd.read_csv('드라마_리스트업.csv')
     actors_name_male = [actor.strip() for row in df_actors['남배우'].dropna() for actor in row.split(',')]
     actors_name_female = [actor.strip() for row in df_actors['여배우'].dropna() for actor in row.split(',')]
 
