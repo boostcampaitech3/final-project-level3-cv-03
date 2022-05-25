@@ -1,9 +1,7 @@
 from ast import Bytes
-from tkinter import Image
 import tensorflow as tf
 import numpy as np
 from back_fastapi.app.utils import transform_image, from_image_to_bytes
-
 from PIL import Image
 
 
