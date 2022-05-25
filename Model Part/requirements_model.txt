@@ -1,8 +1,0 @@
-torch
-torchvision
-matplotlib
-tqdm
-pandas
-albumentations
-opencv-python
-wandb
