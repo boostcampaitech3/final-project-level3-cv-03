@@ -7,16 +7,21 @@ import tensorflow as tf
 from PIL import Image
 
 from utils import transform_image
+import streamlit as st
+import webbrowser
 
 # SETTING PAGE CONFIG TO WIDE MODE
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 
 def main():
     st.title("BeautyGAN Prototype")
     st.write("")
     st.write("")
     st.warning("정면 사진을 넣어주세요.")
-
+    ref_response = requests.post("http://localhost:8008/beauty/ref", actor="강동원")
+    ref_img = ref_response.json()["result"]
+    bytes_list = list(map(lambda x: base64.b64decode(x), ref_img))
+    st.image(ref_img)
     col1, col2, col3 = st.columns(3)
 
     # TODO: File Uploader 구현
@@ -54,7 +59,7 @@ def main():
             st.subheader("Result!!!")
 
             with st.spinner("Inference...."):
-                response = requests.post("http://localhost:8008/order", files=files)
+                response = requests.post("http://localhost:8008/beauty", files=files)
                 output_img = response.json()["result"]
             
                 # st.write(type(output_img))
