@@ -7,6 +7,7 @@ import tensorflow as tf
 from PIL import Image
 
 from utils import transform_image
+import webbrowser
 
 #%% Bootstrap components
 def bootstrap_block_level_button(text):
@@ -193,6 +194,11 @@ def main():
     with col2:
         st.markdown(bootstrap_warning("정면 사진을 넣어주세요."), unsafe_allow_html=True)
 
+    ref_response = requests.post("http://localhost:8008/beauty/ref", actor="강동원")
+    ref_img = ref_response.json()["result"]
+    bytes_list = list(map(lambda x: base64.b64decode(x), ref_img))
+    st.image(ref_img)
+
     col1, col2, col3, col4 = st.columns(4)
 
     # TODO: File Uploader 구현
@@ -247,7 +253,7 @@ def main():
             st.subheader("Result!!!")
 
             with st.spinner("Inference...."):
-                response = requests.post("http://localhost:8008/order", files=files)
+                response = requests.post("http://localhost:8008/beauty", files=files)
                 output_img = response.json()["result"]
             
                 # st.write(type(output_img))
