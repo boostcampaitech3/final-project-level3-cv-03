@@ -1,3 +1,4 @@
+from distutils.fancy_getopt import fancy_getopt
 import io
 import cv2
 import requests
@@ -77,9 +78,9 @@ def template_cover_heading(head_title):
     """
 
 
-def template_subheading(text: str, color: str='black', background_color: str=None):
+def template_subheading(text: str, color: str='black', background_color: str=None, font_size: str='200%'):
     return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:200%">{text}</h2>
+    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{font_size}">{text}</h2>
     """
 
 
@@ -194,10 +195,10 @@ def main():
     with col2:
         st.markdown(bootstrap_warning("정면 사진을 넣어주세요."), unsafe_allow_html=True)
 
-    ref_response = requests.post("http://localhost:8008/beauty/ref", actor="강동원")
-    ref_img = ref_response.json()["result"]
-    bytes_list = list(map(lambda x: base64.b64decode(x), ref_img))
-    st.image(ref_img)
+    # ref_response = requests.post("http://localhost:8008/beauty/ref", actor="강동원")
+    # ref_img = ref_response.json()["result"]
+    # bytes_list = list(map(lambda x: base64.b64decode(x), ref_img))
+    # st.image(ref_img)
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -218,15 +219,24 @@ def main():
         with col2:
             st.markdown(template_subheading('Uploaded Image', 'black', '#AED6F1'), unsafe_allow_html=True)
             st.image(uploaded_file)
+            
+            face_detected = True
+
+            # Face detection branch
+            if face_detected:
+                st.markdown(template_subheading('박스 안쪽에 얼굴이 잘 위치해있나요?', 'black', '#AED6F1', '125%'), unsafe_allow_html=True)
+                face_detect_true_btn = st.button('네')
+                face_detect_false_btn = st.button('아니오')
+
 
     if uploaded_file2:
         with col3:
             st.markdown(template_subheading('Similar Actor', 'black', '#D5DBDB'), unsafe_allow_html=True)
             st.image(uploaded_file2)
-            button = st.button('메이크업 결과 적용')
+            show_beautyGAN_btn = st.button('메이크업 결과 적용')
             st.markdown(bootstrap_block_level_button('메이크업 적용'), unsafe_allow_html=True)
             
-    if uploaded_file and uploaded_file2 and button:
+    if uploaded_file and uploaded_file2 and show_beautyGAN_btn:
         # TODO: 이미지 View
         image_bytes = uploaded_file.getvalue() # binary 형식
         ref_bytes = uploaded_file2.getvalue() # binary 형식
