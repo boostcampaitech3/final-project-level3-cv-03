@@ -1,1 +1,6 @@
-Web_Part/weights
+Web_Part/weights/checkpoint
+Web_Part/weights/model.data-00000-of-00001
+Web_Part/weights/model.index
+Web_Part/weights/model.meta
+Web_Part/weights/epoch_20.pt
+Web_Part/classification_fastapi/epoch_20.pt

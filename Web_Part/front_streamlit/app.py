@@ -7,7 +7,7 @@ import tensorflow as tf
 from PIL import Image
 
 from utils import transform_image
-import webbrowser
+import webbrowser, json
 
 #%% Bootstrap components
 def bootstrap_block_level_button(text):
@@ -194,18 +194,14 @@ def main():
     with col2:
         st.markdown(bootstrap_warning("정면 사진을 넣어주세요."), unsafe_allow_html=True)
 
-    ref_response = requests.post("http://localhost:8008/beauty/ref", actor="강동원")
-    ref_img = ref_response.json()["result"]
-    bytes_list = list(map(lambda x: base64.b64decode(x), ref_img))
-    st.image(ref_img)
-
     col1, col2, col3, col4 = st.columns(4)
 
     # TODO: File Uploader 구현
     with col2:
         uploaded_file = st.file_uploader("사진을 넣어주세요", type=["jpg", "jpeg", "png"])
-    with col3:
-        uploaded_file2 = st.file_uploader("Choose makeup image", type=["jpg", "jpeg", "png"])
+       
+    # with col3:
+        # uploaded_file2 = st.file_uploader("Choose makeup image", type=["jpg", "jpeg", "png"])
 
     # st.markdown(template_album(), unsafe_allow_html=True)
 
@@ -219,41 +215,47 @@ def main():
             st.markdown(template_subheading('Uploaded Image', 'black', '#AED6F1'), unsafe_allow_html=True)
             st.image(uploaded_file)
 
-    if uploaded_file2:
-        with col3:
-            st.markdown(template_subheading('Similar Actor', 'black', '#D5DBDB'), unsafe_allow_html=True)
-            st.image(uploaded_file2)
-            button = st.button('메이크업 결과 적용')
-            st.markdown(bootstrap_block_level_button('메이크업 적용'), unsafe_allow_html=True)
+    # if uploaded_file2:
+    #     with col3:
+    #         st.markdown(template_subheading('Similar Actor', 'black', '#D5DBDB'), unsafe_allow_html=True)
+    #         st.image(uploaded_file2)
+    #         button = st.button('메이크업 결과 적용')
+    #         st.markdown(bootstrap_block_level_button('메이크업 적용'), unsafe_allow_html=True)
             
-    if uploaded_file and uploaded_file2 and button:
+    # if uploaded_file  and button:
+    if uploaded_file:
         # TODO: 이미지 View
         image_bytes = uploaded_file.getvalue() # binary 형식
-        ref_bytes = uploaded_file2.getvalue() # binary 형식
+        # ref_bytes = uploaded_file2.getvalue() # binary 형식
 
         def crop_face(image_raw):
             return image_box
 
-        no_makeup, makeup = transform_image(image_bytes, ref_bytes)
-        files = [('files',(uploaded_file.name, image_bytes, uploaded_file.type)),
-                ('files', (uploaded_file2.name, ref_bytes, uploaded_file2.type))]
-
+        no_makeup = transform_image(image_bytes)
+        files = [('files',(uploaded_file.name, image_bytes, uploaded_file.type))
+                ]
+        response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+        output_actor = response_actor.json()['name']
+        st.write(output_actor)
         col1, col2, col3, col4, col5 = st.columns(5)
 
         with col2:
             st.subheader("Input Face")
             st.image(no_makeup)
-
-        with col3:
-            st.subheader("Makeup")
-            st.image(makeup)
+            
+        # with col3:
+        #     st.subheader("Makeup")
+        #     st.image(makeup)
          
-        with col4:
+        with col3:
             # BeautyGAN load
-            st.subheader("Result!!!")
-
+            st.subheader("Makeup")
+            # files.append(output_actor)
+            data = {
+                "name" : f"{output_actor}"
+            }
             with st.spinner("Inference...."):
-                response = requests.post("http://localhost:8008/beauty", files=files)
+                response = requests.post("http://localhost:8008/beauty",files=files, data=data)
                 output_img = response.json()["result"]
             
                 # st.write(type(output_img))
@@ -261,9 +263,13 @@ def main():
                 # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
                 bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
                 image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
+                st.image(image_list[1], caption="동원참치")
+                
+                with col4:
+                    st.subheader("Result!!!")
+                    st.image(image_list[0], caption="Result!!!")
+                    st.success('Done!')
 
-                st.image(image_list[0], caption="Result!!!")
-                st.success('성공!')
 
 
 #%% Main part

@@ -47,13 +47,13 @@ class InferenceResult(BaseModel):
 
 @router.post("/")
 async def inference(files: List[UploadFile] = File(...), model=Depends(load_model)):
-
+    
     model.eval()
-
+    product = ''
     for file in files:
         image_bytes = await file.read()
         predicted = get_prediction(model=model, image_bytes=image_bytes)
         inference_result = celeb_list[predicted]
-        product = InferenceResult(result=inference_result)
+        product = InferenceResult(name=inference_result)
 
     return product

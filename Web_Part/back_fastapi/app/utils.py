@@ -8,7 +8,7 @@ import io
 
 
 detector = dlib.get_frontal_face_detector()  # 얼굴 영역 인식 모델 로드
-sp = dlib.shape_predictor("./models/shape_predictor_5_face_landmarks.dat")
+sp = dlib.shape_predictor("./weights/shape_predictor_5_face_landmarks.dat")
 
 
 def preprocess(img):
@@ -31,20 +31,12 @@ def align_faces(img):  # 원본이미지를 넣으면 align 완료된 얼굴이�
     return faces
 
 
-def transform_image(image_bytes: bytes, ref_bytes: bytes):
+def transform_image(image_bytes: bytes):
     image = Image.open(io.BytesIO(image_bytes))
-    ref = Image.open(io.BytesIO(ref_bytes))
-
     image = image.convert("RGB")
-    ref = ref.convert("RGB")
-
     image_array = np.array(image)
-    ref_array = np.array(ref)
-
     img = align_faces(image_array)[0]
-    reference = align_faces(ref_array)[0]
-
-    return img, reference
+    return img
 
 
 def from_image_to_bytes(img: PIL.Image) -> Bytes:

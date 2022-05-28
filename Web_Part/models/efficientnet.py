@@ -19,6 +19,7 @@ from albumentations.pytorch import ToTensorV2
 import torch
 
 
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #### mdoel.py ####
@@ -31,6 +32,8 @@ def efficientnet(celeb_num):
 #### predict.py ####
 def get_prediction(model, image_bytes):
 
+    # img = transform_image(image_bytes=image_bytes).to(device)
+    device = torch.device('cpu')
     img = transform_image(image_bytes=image_bytes).to(device)
 
     pred = model(img)
@@ -41,8 +44,8 @@ def get_prediction(model, image_bytes):
 
 # @st.cache
 def load_model(celeb_num=20):
-    ## model 불러오기
-    saved_path = "./app/model_saved/epoch_20.pt"
+    ## model  storage에서 불러오기
+    saved_path = "./weights/epoch_20.pt"
 
     # model = Efficientnet_b7(celeb_num=len(celeb_list)).to(device)
     model = efficientnet(celeb_num=celeb_num)

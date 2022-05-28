@@ -41,7 +41,7 @@ def get_prediction(model, image_bytes):
 # @st.cache
 def load_model(celeb_num):
     ## model 불러오기
-    saved_path = './app/model_saved/epoch_20.pt'
+    saved_path = './epoch_20.pt'
 
     # model = Efficientnet_b7(celeb_num=len(celeb_list)).to(device)
     model = efficientnet(celeb_num=celeb_num)

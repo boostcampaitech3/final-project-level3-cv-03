@@ -13,7 +13,7 @@ def postprocess(img):
     return ((img + 1.0) * 127.5).astype(np.uint8)  # -1 ~ 1 -> 0 ~ 255
 
 
-def get_beautygan(moedl_path: str = "./models/model.meta"):
+def get_beautygan(moedl_path: str = "./weights/model.meta"):
     # 세션 생성
     sess = tf.Session()    
     sess.run(tf.global_variables_initializer())
@@ -22,7 +22,7 @@ def get_beautygan(moedl_path: str = "./models/model.meta"):
     saver = tf.train.import_meta_graph(moedl_path)
     
     # 모델의 weighs를 load
-    saver.restore(sess, tf.train.latest_checkpoint("./models"))
+    saver.restore(sess, tf.train.latest_checkpoint("./weights"))
     # 그래프에 저장
     graph = tf.get_default_graph()
     
