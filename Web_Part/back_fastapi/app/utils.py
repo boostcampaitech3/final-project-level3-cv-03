@@ -4,7 +4,7 @@ import PIL
 import dlib
 from PIL import Image
 import numpy as np
-import io
+import io, json, requests, random
 
 
 detector = dlib.get_frontal_face_detector()  # 얼굴 영역 인식 모델 로드
@@ -53,3 +53,13 @@ def from_image_to_bytes(img: PIL.Image) -> Bytes:
     decoded = encoded.decode("ascii")
 
     return decoded
+
+
+# reference image -> bytes_str
+def ref_actor_image(actor : str):
+    with open('actor_data.json', 'r', encoding="UTF-8") as f:
+        json_data = json.loads(f.read())
+    img_url = json_data[actor][random.randrange(0, 3)]
+    ref_image = Image.open(requests.get(img_url, stream=True).raw)
+    ref_bytes_str = from_image_to_bytes(ref_image)
+    return ref_bytes_str

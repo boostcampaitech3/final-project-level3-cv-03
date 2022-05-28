@@ -53,3 +53,9 @@ def from_image_to_bytes(img: PIL.Image) -> Bytes:
     decoded = encoded.decode("ascii")
 
     return decoded
+
+# bytes_str -> image
+def convert_bytes_to_image(bytes_str : str):
+    str_to_bytes = base64.b64decode(bytes_str)
+    image = Image.open(io.BytesIO(str_to_bytes))
+    return image

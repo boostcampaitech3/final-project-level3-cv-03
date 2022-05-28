@@ -21,7 +21,7 @@ def get_beautygan(moedl_path: str = "./weights/model.meta"):
     # 모델의 그래프를 불러오기
     saver = tf.train.import_meta_graph(moedl_path)
     
-    # 모델의 weighs를 load
+    # 모델의 weights를 load
     saver.restore(sess, tf.train.latest_checkpoint("./weights"))
     # 그래프에 저장
     graph = tf.get_default_graph()
