@@ -227,6 +227,11 @@ def main():
             response_actor = requests.post("http://localhost:8008/actorclass", files=files)
             same_actor = response_actor.json()['name']
             same_actor_image = convert_bytes_to_image(response_actor.json()['ref_actor'])
+            # 추가
+            actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
+ 
+            files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
+
             st.image(same_actor_image, caption=f"{same_actor}")
 
         actor_name = {
@@ -250,7 +255,7 @@ def main():
                 files=files
                 )
                 output_img = response.json()["result"]
-            
+
                 # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
                 bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
                 image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))

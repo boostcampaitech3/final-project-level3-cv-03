@@ -44,14 +44,23 @@ def from_image_to_bytes(img: PIL.Image) -> Bytes:
     pillow image 객체를 bytes로 변환
     """
     # Pillow 이미지 객체를 Bytes로 변환
-    imgByteArr = io.BytesIO()
-    img.save(imgByteArr, format="jpeg")
+    imgByteArr = io.BytesIO() # bytes -> binary
+    print('io한 imgByteArr', type(imgByteArr)) # <class '_io.BytesIO'>
+
+    img.save(imgByteArr, format="jpeg") # PIL 이미지를 binary형태의 이름으로 저장, return NoneType
+    print('img.save했음',type(imgByteArr), 'img', type(img)) # <class '_io.BytesIO'> <class 'PIL.JpegImagePlugin.JpegImageFile'>
+
     imgByteArr = imgByteArr.getvalue()
+    print('imgByteArr.getvalue()', type(imgByteArr)) # <class 'bytes'>
+    
     # Base64로 Bytes를 인코딩
     encoded = base64.b64encode(imgByteArr)
+    print('encoded', type(encoded)) # <class 'bytes'>
+
     # Base64로 ascii로 디코딩
     decoded = encoded.decode("ascii")
-
+    print('decoded', type(decoded)) # <class 'str'>
+    
     return decoded
 
 

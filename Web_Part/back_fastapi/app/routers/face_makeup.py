@@ -43,11 +43,13 @@ async def make_transfer(
     global actor
     sess, graph = model
     image_bytes = await files[0].read() # user image
+    ref_bytes_test = await files[1].read() 
+
     ref_bytes_str = ref_actor_image(actor)
     ref_bytes = base64.b64decode(ref_bytes_str)
 
     # np.ndarray -> PIL 이미지 -> ASCII코드로 변환된 bytes 데이터(str)
-    transfer_result, transfer_refer = transfer(sess, graph, image_bytes, ref_bytes)
+    transfer_result, transfer_refer = transfer(sess, graph, image_bytes, ref_bytes_test)
     product = TransferImage(result=[transfer_result, transfer_refer])
 
     return product
