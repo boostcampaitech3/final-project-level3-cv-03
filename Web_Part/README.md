@@ -49,7 +49,8 @@ Streamlit + FastAPI를 이용한 닮은꼴 화장 모델 온라인 서빙
          ```
       
    3. 아래 url에 들어가서 beautygan의 가중치는 Web_Part/models/beautygan/weights 폴더 안으로, efficientnet의 가중치는 Web_Part/models/efficientnet/weights 다운받습니다.  
-      https://drive.google.com/drive/folders/1pgVqnF2-rnOxcUQ3SO4JwHUFTdiSe5t9
+      - beautygan 가중치 : https://drive.google.com/drive/folders/1pgVqnF2-rnOxcUQ3SO4JwHUFTdiSe5t9
+      - efficientnet 가중치 : https://drive.google.com/drive/folders/113pJ2YZa_AuOGWpan7qotU3s374KzpbC?usp=sharing
 
    4. ```shell
       > cd Web_Part
