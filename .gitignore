@@ -1,5 +1,10 @@
 .vscode
-Web_Part/models/beautygan/weights/
-Web_Part/models/efficientnet/weights/
+Web_Part/models/beautygan/weights/checkpoint
+Web_Part/models/beautygan/weights/model.data-00000-of-00001
+Web_Part/models/beautygan/weights/model.index
+Web_Part/models/beautygan/weights/model.meta
+Web_Part/models/efficientnet/weights/efficientnet_b4_epoch_28_180.pt
+Web_Part/models/efficientnet/weights/efficientnet_b4_epoch_28.pt
+Web_Part/models/efficientnet/weights/efficientnet_b7_epoch_20.pt
 Web_Part/classification_fastapi/epoch_20.pt
 **/__pycache__/

@@ -1,25 +1,16 @@
-#### mdoel.py ####
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
 
-#### predict.py ####
+#### predict.py, utils.py (transform) ####
 import streamlit as st
 import numpy as np
-import torch
-
-#### utils.py (transform) ####
-import io
-import numpy as np
-import cv2
+import io, cv2
 
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-import torch
 
-
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 #### mdoel.py ####
@@ -32,14 +23,10 @@ def efficientnet(celeb_num):
 
 #### predict.py ####
 def get_prediction(model, image_bytes):
-
-    # img = transform_image(image_bytes=image_bytes).to(device)
     device = torch.device('cpu')
     img = transform_image(image_bytes=image_bytes).to(device)
-
     pred = model(img)
     pred = pred.to("cpu").argmax()
-
     return pred
 
 
@@ -51,7 +38,6 @@ def load_model(celeb_num=175):
     model = efficientnet(celeb_num=celeb_num)
     model.load_state_dict(torch.load(saved_path, map_location=device))
     # model.to(device)
-
     return model
 
 

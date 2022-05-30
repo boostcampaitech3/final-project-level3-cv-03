@@ -1,36 +1,10 @@
-from fastapi import APIRouter
-from fastapi import UploadFile, File
+from fastapi import APIRouter, UploadFile, File
 from pydantic import BaseModel
 from fastapi.param_functions import Depends
-
 from typing import List, Optional
 
 from models.efficientnet.efficientnet_model import load_model, get_prediction
-from back_fastapi.app.utils import ref_actor_image,get_actor_name
-
-celeb_list = [
-    "공유",
-    "권나라",
-    "문채원",
-    "박하선",
-    "배두나",
-    "신민아",
-    "신성록",
-    "안재현",
-    "여진구",
-    "유아인",
-    "이다희",
-    "이병헌",
-    "이선균",
-    "이시영",
-    "전미도",
-    "정은지",
-    "조정석",
-    "차승원",
-    "한선화",
-    "현빈",
-]
-
+from back_fastapi.app.utils import ref_actor_image
 
 router = APIRouter(
     prefix="/actorclass",
@@ -54,8 +28,7 @@ async def inference(files: List[UploadFile] = File(...), model=Depends(load_mode
     # for file in files:
     image_bytes = await files[0].read()
     predicted = get_prediction(model=model, image_bytes=image_bytes)
-    inference_result = get_actor_name(predicted)
-    ref_actor = ref_actor_image(inference_result)
+    ref_actor, inference_result = ref_actor_image(predicted)
     product = InferenceResult(name=inference_result,ref_actor =ref_actor)
     
     return product

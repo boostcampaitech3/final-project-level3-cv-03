@@ -4,28 +4,22 @@ import numpy as np
 from back_fastapi.app.utils import transform_image, from_image_to_bytes
 from PIL import Image
 
-
 def preprocess(img):
     return img.astype(np.float32) / 127.5 - 1.0  # 0 ~ 255 -> -1 ~ 1
 
-
 def postprocess(img):
     return ((img + 1.0) * 127.5).astype(np.uint8)  # -1 ~ 1 -> 0 ~ 255
-
 
 def get_beautygan(moedl_path: str = "./models/beautygan/weights/model.meta"):
     # 세션 생성
     sess = tf.Session()    
     sess.run(tf.global_variables_initializer())
-    
     # 모델의 그래프를 불러오기
     saver = tf.train.import_meta_graph(moedl_path)
-    
     # 모델의 weights를 load
     saver.restore(sess, tf.train.latest_checkpoint("./models/beautygan/weights"))
     # 그래프에 저장
     graph = tf.get_default_graph()
-    
     return sess, graph
 
 

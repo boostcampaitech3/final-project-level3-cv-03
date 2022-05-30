@@ -200,11 +200,6 @@ def main():
     with col2:
         uploaded_file = st.file_uploader("사진을 넣어주세요", type=["jpg", "jpeg", "png"])
        
-    # with col3:
-        # uploaded_file2 = st.file_uploader("Choose makeup image", type=["jpg", "jpeg", "png"])
-
-    # st.markdown(template_album(), unsafe_allow_html=True)
-
     st.write("")
     st.write("")
     st.write("")
@@ -227,19 +222,11 @@ def main():
             response_actor = requests.post("http://localhost:8008/actorclass", files=files)
             same_actor = response_actor.json()['name']
             same_actor_image = convert_bytes_to_image(response_actor.json()['ref_actor'])
-            # 추가
+            # beautyGAN에 보내줄 refer image 추가
             actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
- 
             files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
-
             st.image(same_actor_image, caption=f"{same_actor}")
 
-        actor_name = {
-                "name" : same_actor
-            }
-        send_actor_name = requests.post("http://localhost:8008/beauty/actor",
-                json=actor_name
-                )
         col1, col2, col3, col4, col5 = st.columns(5)
 
         with col2:
