@@ -5,8 +5,8 @@ from fastapi.param_functions import Depends
 
 from typing import List, Optional
 
-from models.efficientnet import load_model, get_prediction
-from back_fastapi.app.utils import ref_actor_image
+from models.efficientnet.efficientnet_model import load_model, get_prediction
+from back_fastapi.app.utils import ref_actor_image,get_actor_name
 
 celeb_list = [
     "공유",
@@ -54,7 +54,7 @@ async def inference(files: List[UploadFile] = File(...), model=Depends(load_mode
     # for file in files:
     image_bytes = await files[0].read()
     predicted = get_prediction(model=model, image_bytes=image_bytes)
-    inference_result = celeb_list[predicted]
+    inference_result = get_actor_name(predicted)
     ref_actor = ref_actor_image(inference_result)
     product = InferenceResult(name=inference_result,ref_actor =ref_actor)
     

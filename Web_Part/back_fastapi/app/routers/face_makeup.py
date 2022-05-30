@@ -3,7 +3,7 @@ from fastapi.param_functions import Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional, Dict
-from models.beautygan import get_beautygan, transfer
+from models.beautygan.beautygan_model import get_beautygan, transfer
 from back_fastapi.app.storage import upload_to_bucket, download_from_bucket
 from back_fastapi.app.utils import ref_actor_image
 import base64, io

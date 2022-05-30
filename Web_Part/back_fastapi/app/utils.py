@@ -8,7 +8,8 @@ import io, json, requests, random
 
 
 detector = dlib.get_frontal_face_detector()  # 얼굴 영역 인식 모델 로드
-sp = dlib.shape_predictor("./weights/shape_predictor_5_face_landmarks.dat")
+sp = dlib.shape_predictor("./models/beautygan/weights/shape_predictor_5_face_landmarks.dat")
+
 
 
 def preprocess(img):
@@ -63,12 +64,19 @@ def from_image_to_bytes(img: PIL.Image) -> Bytes:
     
     return decoded
 
-
 # reference image -> bytes_str
 def ref_actor_image(actor : str):
-    with open('actor_data.json', 'r', encoding="UTF-8") as f:
+    with open('actor.json', 'r', encoding="UTF-8") as f:
         json_data = json.loads(f.read())
-    img_url = json_data[actor][random.randrange(0, 3)]
+    actor_list = [actor_data for actor_data in json_data["actor"] if actor_data["name"] == actor]
+
+    img_url = actor_list[0]["image"][random.randrange(0, 3)]
     ref_image = Image.open(requests.get(img_url, stream=True).raw)
     ref_bytes_str = from_image_to_bytes(ref_image)
     return ref_bytes_str
+
+def get_actor_name(predict : int):
+    with open('actor.json', 'r', encoding="UTF-8") as f:
+        json_data = json.loads(f.read())
+    actor_list = [actor_data for actor_data in json_data["actor"] if actor_data["id"] == predict]
+    return actor_list[0]["name"]
