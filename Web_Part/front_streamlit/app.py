@@ -1,3 +1,4 @@
+from distutils.fancy_getopt import fancy_getopt
 import io
 import cv2
 import requests
@@ -9,250 +10,156 @@ from PIL import Image
 from utils import transform_image, convert_bytes_to_image
 import webbrowser, json
 
-#%% Bootstrap components
-def bootstrap_block_level_button(text):
-    return f"""
-    <button type="button" class="btn btn-primary btn-lg btn-block">{text}</button>
-    """
+import front_streamlit.external_components as ec
 
-
-def bootstrap_card():
-    return f"""
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-        </div>
-    </div>
-    """
-
-
-def bootstrap_warning(text: str):
-    return f"""
-        <div class="alert alert-dark" role="alert", style="margin:3rem; background-color:#FCF3CF; margin-top:18px; font-family:verdana; font-size:150%; text-align:center;">
-        {text}
-        </div>
-    """
-
-
-def bootstrap_navbar():
-    return """
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">배우고싶니</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Features</a>
-                <a class="nav-item nav-link" href="#">Pricing</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a>
-            </div>
-        </div>
-    </nav>
-    """
-
-def template_navbar():
-    return """
-    <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">배우고싶니</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Service Page</a>
-            <a class="nav-link" href="#">Contact Us</a>
-          </nav>
-        </div>
-    </header>
-    """
-
-
-def template_cover_heading(head_title):
-    return f"""
-    <h1 style="text-align:center; color=black; font-weight:bold; font-size:400%">{head_title}</h1>
-    """
-
-
-def template_subheading(text: str, color: str='black', background_color: str=None):
-    return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:200%">{text}</h2>
-    """
-
-
-def template_body():
-    return """
-    <body class="text-center" data-new-gr-c-s-check-loaded="14.1062.0" data-gr-ext-installed="">
-
-        <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-            <header class="masthead mb-auto">
-                <div class="inner">
-                <h3 class="masthead-brand">Cover</h3>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Contact</a>
-                </nav>
-                </div>
-            </header>
-
-            <main role="main" class="inner cover">
-                <h1 class="cover-heading">Cover your page.</h1>
-                <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-                <p class="lead">
-                    <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-                </p>
-            </main>
-
-            <footer class="mastfoot mt-auto">
-                <div class="inner">
-                  <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-                </div>
-            </footer>
-        </div>
-
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+def uploaded_file_change_callback():
+    for k in ['classification_done', 'apply_beautyGAN', 'user_face_confirm']:
+        st.session_state[k] = False
     
-    </body>
-    """
-
-
-def template_album():
-    return """
-    <div class="container">
-            <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Given Image" alt="Given Image [100%x225]" style="height: 225px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_180ff073af8%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_180ff073af8%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.84375%22%20y%3D%22118.8%22%3EGiven Image%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_180ff073af8%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_180ff073af8%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.84375%22%20y%3D%22118.8%22%3EMake Up%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
-                <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_180ff073af9%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_180ff073af9%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.84375%22%20y%3D%22118.8%22%3EResult%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
-                <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    """
-
+#%% Main function
 def main():
     # Get css
     with open('./front_streamlit/bootstrap.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+    # Apply custom streamlit button style
+    ec.apply_custom_button_style()
 
-    st.markdown(template_navbar(), unsafe_allow_html=True)
-    st.markdown(template_cover_heading('BeautyGAN Prototype'), unsafe_allow_html=True)
-    
-    # Show warning message
-    # st.warning("정면 사진을 넣어주세요.")
+    # Navigation bar and page title
+    st.markdown(ec.template_navbar(), unsafe_allow_html=True)
+    st.markdown(ec.template_cover_heading('BeautyGAN Prototype'), unsafe_allow_html=True)
+
+    # Initialize session state key for logic
+    session_keys = [
+        'user_face_confirm',
+        'apply_beautyGAN', 
+        'classification_done', 
+        'classification_img',
+        'beautyGAN_img_list',
+        'sim_actor_nm'
+        ]
+    for session_key in session_keys:
+        if session_key not in st.session_state:
+            st.session_state[session_key] = False
+
+    # Show input guideline message
     col1, col2, col3 = st.columns(3)
     with col2:
-        st.markdown(bootstrap_warning("정면 사진을 넣어주세요."), unsafe_allow_html=True)
+        st.markdown(ec.bootstrap_warning("정면 사진을 올려주세요."), unsafe_allow_html=True)
+        uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])        
 
-    col1, col2, col3, col4 = st.columns(4)
+    # Set columns to show uploaded image and classification result image
+    _, col2, col3, _ = st.columns(4)
 
-    # TODO: File Uploader 구현
-    with col2:
-        uploaded_file = st.file_uploader("사진을 넣어주세요", type=["jpg", "jpeg", "png"])
-       
-    st.write("")
-    st.write("")
-    st.write("")
-    st.write("")
-
+    # If get user image
     if uploaded_file:
+        # Show user uploaded image
+        image_bytes = uploaded_file.getvalue()
+        no_makeup = transform_image(image_bytes)
+        files = [
+            ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
+            ]
+
+
         with col2:
-            st.markdown(template_subheading('Uploaded Image', 'black', '#AED6F1'), unsafe_allow_html=True)
-            st.image(uploaded_file)
-        with col3:
+            st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1'), unsafe_allow_html=True)
+            st.image(uploaded_file, use_column_width=True)
+            
+            face_detected = True
+
+            # Face detection branch (fit for col2)
+            if face_detected:
+                st.markdown(ec.template_subheading('박스 안쪽에 얼굴이 잘 위치해있나요?', 'black', '#AED6F1', '125%'), unsafe_allow_html=True)
+            else:
+                st.error('''죄송합니다. 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
+        
+        # Face detection main branch
+        if face_detected:
+            _, sub_col1, sub_col2, _ = st.columns([2, 1, 1, 4])
+            with sub_col1:
+                user_face_true_btn = st.button('네')
+            with sub_col2:
+                user_face_false_btn = st.button('아니오') 
+
+            # If the detected face is found to be inaccurate by the user
+            if user_face_false_btn:
+                st.session_state.user_face_confirm = False
+                st.session_state.apply_beautyGAN = False
+                st.session_state.classification_done = False
+
+                _, col2, col3, _ = st.columns(4)
+                with col2:
+                    st.markdown(ec.template_subheading('죄송합니다. 다른 사진을 업로드해주세요.', 'white', '', '105%'), unsafe_allow_html=True)
+            
+            # If the detected face is found to be accurate by the user
+            if user_face_true_btn:
+                st.session_state.user_face_confirm = True
+
+            if st.session_state.user_face_confirm:
+                # Get similar actor result and beautyGAN result
+                with col3:
+                    if not st.session_state.classification_done:
+                        with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
+                            response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+                            st.session_state.sim_actor_nm = response_actor.json()['name']
+                            st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
+                            # beautyGAN에 보내줄 refer image 추가
+                            actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
+                            files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
+                                                    
+                            st.session_state.classification_done = True
+
+                            # TODO: Get beautyGAN result
+                            response = requests.post("http://localhost:8008/beauty", files=files)
+                            output_img = response.json()["result"]
+                        
+                            # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
+                            bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
+                            image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
+
+                            # Put beautyGAN result into the session state
+                            st.session_state.beautyGAN_img_list = image_list
+
+                            # Show similar actor image
+                            st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
+                                        unsafe_allow_html=True)
+                            st.image(st.session_state.classification_img, use_column_width=True)
+                            apply_beautyGAN_btn = st.button('메이크업 따라하기')
+                            if apply_beautyGAN_btn:
+                                st.session_state.apply_beautyGAN = True
+                    else:                        
+                        # Show similar actor image
+                        st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
+                                                            unsafe_allow_html=True)
+                        st.image(st.session_state.classification_img, use_column_width=True)
+                        apply_beautyGAN_btn = st.button('메이크업 따라하기')
+                        if apply_beautyGAN_btn:
+                            st.session_state.apply_beautyGAN = True
+
+        if st.session_state.user_face_confirm and st.session_state.apply_beautyGAN:
             # TODO: 이미지 View
             image_bytes = uploaded_file.getvalue() # binary 형식
+            ref_bytes = st.session_state.classification_img 
 
             def crop_face(image_raw):
                 return image_box
 
-            no_makeup = transform_image(image_bytes)
-            files = [('files',(uploaded_file.name, image_bytes, uploaded_file.type))
-                    ]
-            response_actor = requests.post("http://localhost:8008/actorclass", files=files)
-            same_actor = response_actor.json()['name']
-            same_actor_image = convert_bytes_to_image(response_actor.json()['ref_actor'])
-            # beautyGAN에 보내줄 refer image 추가
-            actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
-            files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
-            st.image(same_actor_image, caption=f"{same_actor}")
+            st.write("")
+            # st.write("")
 
-        col1, col2, col3, col4, col5 = st.columns(5)
+            col1, col2, col3, col4, col5 = st.columns(5)
+            with col2:
+                st.markdown(ec.template_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
+                st.image(no_makeup, use_column_width=True)
+          
+            with col3:
+                # BeautyGAN load
+                st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', ''), unsafe_allow_html=True)
+                st.image(st.session_state.beautyGAN_img_list[0], use_column_width=True)
 
-        with col2:
-            st.subheader("Input Face")
-            st.image(no_makeup)
-         
-        with col3:
-            # BeautyGAN load
-            st.subheader("Makeup")
-            
-            with st.spinner("Inference...."):
-                response = requests.post("http://localhost:8008/beauty",
-                files=files
-                )
-                output_img = response.json()["result"]
-
-                # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
-                bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
-                image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
-                st.image(image_list[1], caption=f"{same_actor}")
-                
-                with col4:
-                    st.subheader("Result!!!")
-                    st.image(image_list[0], caption="Result!!!")
-                    st.success('Done!')
-
+            with col4:
+                st.markdown(ec.template_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
+                st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
 
 
 #%% Main part
@@ -262,5 +169,6 @@ st.set_page_config(
     layout="wide",
     )
 
-main()
+if __name__=='__main__':
+    main()
 
