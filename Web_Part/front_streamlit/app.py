@@ -27,7 +27,7 @@ def main():
 
     # Navigation bar and page title
     st.markdown(ec.template_navbar(), unsafe_allow_html=True)
-    st.markdown(ec.template_cover_heading('BeautyGAN Prototype'), unsafe_allow_html=True)
+    st.markdown(ec.template_cover_heading('Look-Alike Actor'), unsafe_allow_html=True)
 
     # Initialize session state key for logic
     session_keys = [
@@ -45,7 +45,7 @@ def main():
     # Show input guideline message
     col1, col2, col3 = st.columns(3)
     with col2:
-        st.markdown(ec.bootstrap_warning("정면 사진을 올려주세요."), unsafe_allow_html=True)
+        st.markdown(ec.bootstrap_warning("※ 아래에 정면 사진을 올려주세요 ※"), unsafe_allow_html=True)
         uploaded_file = st.file_uploader("", type=["jpg", "jpeg", "png"])        
 
     # Set columns to show uploaded image and classification result image
@@ -62,14 +62,14 @@ def main():
 
 
         with col2:
-            st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1'), unsafe_allow_html=True)
+            st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.8), unsafe_allow_html=True)
             st.image(uploaded_file, use_column_width=True)
             
             face_detected = True
 
             # Face detection branch (fit for col2)
             if face_detected:
-                st.markdown(ec.template_subheading('박스 안쪽에 얼굴이 잘 위치해있나요?', 'black', '#AED6F1', '125%'), unsafe_allow_html=True)
+                st.markdown(ec.template_subheading('박스 안쪽에 얼굴이 잘 위치해있나요?', 'black', '#AED6F1', '1.3'), unsafe_allow_html=True)
             else:
                 st.error('''죄송합니다. 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
         
@@ -89,7 +89,7 @@ def main():
 
                 _, col2, col3, _ = st.columns(4)
                 with col2:
-                    st.markdown(ec.template_subheading('죄송합니다. 다른 사진을 업로드해주세요.', 'white', '', '105%'), unsafe_allow_html=True)
+                    st.markdown(ec.template_subheading('죄송합니다. 다른 사진을 업로드해주세요.', 'white', '', '1.2'), unsafe_allow_html=True)
             
             # If the detected face is found to be accurate by the user
             if user_face_true_btn:
@@ -121,18 +121,18 @@ def main():
                             st.session_state.beautyGAN_img_list = image_list
 
                             # Show similar actor image
-                            st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
+                            st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB', 1.8),
                                         unsafe_allow_html=True)
                             st.image(st.session_state.classification_img, use_column_width=True)
-                            apply_beautyGAN_btn = st.button('메이크업 따라하기')
+                            apply_beautyGAN_btn = st.button('메이크업 따라해보기')
                             if apply_beautyGAN_btn:
                                 st.session_state.apply_beautyGAN = True
                     else:                        
                         # Show similar actor image
-                        st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
+                        st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB', 1.8),
                                                             unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
-                        apply_beautyGAN_btn = st.button('메이크업 따라하기')
+                        apply_beautyGAN_btn = st.button('메이크업 따라해보기')
                         if apply_beautyGAN_btn:
                             st.session_state.apply_beautyGAN = True
 
@@ -145,22 +145,21 @@ def main():
                 return image_box
 
             st.write("")
-            # st.write("")
+            st.write("")
+            st.write("")
+            st.write("")
 
             col1, col2, col3, col4, col5 = st.columns(5)
             with col2:
-                st.markdown(ec.template_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
                 st.image(no_makeup, use_column_width=True)
-          
+                st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
             with col3:
-                # BeautyGAN load
-                st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', ''), unsafe_allow_html=True)
                 st.image(st.session_state.beautyGAN_img_list[0], use_column_width=True)
-
+                st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', '', 1.2), unsafe_allow_html=True)
             with col4:
-                st.markdown(ec.template_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
                 st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
-
+                st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
+                
 
 #%% Main part
 # SETTING PAGE CONFIG TO WIDE MODE

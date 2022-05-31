@@ -7,10 +7,10 @@ def apply_custom_button_style ():
         background-color: #616A6B;
         color: white;
         height: 3em;
-        width: 9.3em;
+        width: 11vw;
         border-radius:5px;
         border:3px solid #000000;
-        font-size:20px;
+        font-size:1vw;
         font-weight: bold;
         margin: auto;
         display: block;
@@ -52,7 +52,7 @@ def bootstrap_card():
 
 def bootstrap_warning(text: str):
     return f"""
-        <div class="alert alert-dark" role="alert", style="margin:0rem; background-color:#FCF3CF; margin-top:18px; font-family:verdana; font-size:150%; text-align:center;">
+        <div class="alert alert-dark" role="alert", style="margin:0rem; background-color:#FCF3CF; margin-top:18px; font-family:verdana; font-size:1.5vw; text-align:center;">
         {text}
         </div>
     """
@@ -61,7 +61,7 @@ def bootstrap_warning(text: str):
 def bootstrap_navbar():
     return """
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">배우고싶니</a>
+        <a class="navbar-brand" href="#">배우고 싶니?</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -80,7 +80,7 @@ def template_navbar():
     return """
     <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="masthead-brand">배우고싶니</h3>
+          <h3 class="masthead-brand">배우고 싶니 v1.0.0</h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="#">Service Page</a>
@@ -93,13 +93,13 @@ def template_navbar():
 
 def template_cover_heading(head_title):
     return f"""
-    <h1 style="text-align:center; color=black; font-weight:bold; font-size:400%">{head_title}</h1>
+    <h1 style="text-align:center; color=black; font-weight:bold; font-size:4.5vw">{head_title}</h1>
     """
 
 
-def template_subheading(text: str, color: str='black', background_color: str=None, font_size: str='200%'):
+def template_subheading(text: str, color: str='black', background_color: str=None, font_size: float=1):
     return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{font_size}">{text}</h2>
+    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vw;">{text}</h2>
     """
 
 
