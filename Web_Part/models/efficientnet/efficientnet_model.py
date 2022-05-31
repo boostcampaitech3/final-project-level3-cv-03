@@ -13,6 +13,24 @@ from albumentations.pytorch import ToTensorV2
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+import insightface
+from insightface.utils.face_align import *
+from insightface.utils.face_align import norm_crop as norm_crop
+from insightface.app import FaceAnalysis
+from insightface.data import get_image as ins_get_image
+
+CROPPED_IMG_SIZE = 1024 ##
+insightface.utils.face_align.src_map = {
+    256 : insightface.utils.face_align.src * 256 / 112,
+    380 : insightface.utils.face_align.src * 380 / 112,
+    1024 : insightface.utils.face_align.src * 1024 / 112
+}
+
+app = FaceAnalysis(providers=['CPUExecutionProvider'])
+app.prepare(ctx_id=0, det_size=(256, 256))
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 #### mdoel.py ####
 def efficientnet(celeb_num):
     model = torchvision.models.efficientnet_b4(pretrained=False)
@@ -43,10 +61,12 @@ def load_model(celeb_num=175):
 
 #### utils.py (transform) ####
 def transform_image(image_bytes: bytes) -> torch.Tensor:
-    test_transform = A.Compose([A.Resize(256, 256), ToTensorV2()])
     img_ = np.frombuffer(image_bytes, dtype=np.uint8)
     img = cv2.imdecode(img_, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
+    boxes = app.get(img)
+    boxes = boxes[0]
+    img = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
     img /= 255.0
-
+    test_transform = A.Compose([A.Resize(380, 380), ToTensorV2()])
     return test_transform(image=img)["image"].unsqueeze(0)
