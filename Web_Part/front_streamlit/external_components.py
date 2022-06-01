@@ -93,7 +93,7 @@ def template_navbar():
 
 def template_cover_heading(head_title):
     return f"""
-    <h1 style="text-align:center; color=black; font-weight:bold; font-size:4.5vw">{head_title}</h1>
+    <h1 style="text-align:center; color:white; font-weight:bold; font-size:4.5vw">{head_title}</h1>
     """
 
 

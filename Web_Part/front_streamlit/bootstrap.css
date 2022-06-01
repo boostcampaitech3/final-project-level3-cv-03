@@ -35,6 +35,10 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.main{
+  background-color: #000;
+}
+
 *,
 *::before,
 *::after {
@@ -10235,6 +10239,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 .invisible {
   visibility: hidden !important;
+}
+.masthead-brand{
+  color: #fff;
 }
 
 @media print {
