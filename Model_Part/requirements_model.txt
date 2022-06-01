@@ -1,8 +1,9 @@
-torch
-torchvision
-matplotlib
-tqdm
-pandas
-albumentations
-opencv-python
-wandb
+insightface==0.6.2
+ipykernel==6.13.0
+onnxruntime==1.11.1
+opencv-python==4.5.5.64
+pandas==1.1.5
+pip==21.2.2
+torchvision==0.11.1
+wandb==0.12.17
+wheel==0.37.1
