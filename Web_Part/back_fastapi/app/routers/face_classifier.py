@@ -15,6 +15,7 @@ router = APIRouter(
 class InferenceResult(BaseModel):
     name: str
     ref_actor: Optional[str]
+    percentage : float
 
     class Config:
         arbitrary_types_allowed = True
@@ -27,8 +28,8 @@ async def inference(files: List[UploadFile] = File(...), model=Depends(load_mode
     product = ''
     # for file in files:
     image_bytes = await files[0].read()
-    predicted = get_prediction(model=model, image_bytes=image_bytes)
+    predicted, percentage = get_prediction(model=model, image_bytes=image_bytes)
     ref_actor, inference_result = ref_actor_image(predicted)
-    product = InferenceResult(name=inference_result,ref_actor =ref_actor)
+    product = InferenceResult(name=inference_result,ref_actor = ref_actor, percentage=percentage)
     
     return product

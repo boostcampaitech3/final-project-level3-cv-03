@@ -101,6 +101,7 @@ def main():
                     if not st.session_state.classification_done:
                         with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
                             response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+                            percentage = response_actor.json()['percentage']
                             st.session_state.sim_actor_nm = response_actor.json()['name']
                             st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
                             # beautyGAN에 보내줄 refer image 추가
@@ -121,7 +122,7 @@ def main():
                             st.session_state.beautyGAN_img_list = image_list
 
                             # Show similar actor image
-                            st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
+                            st.markdown(ec.template_subheading(f'당신과 닮은 배우는 {percentage*100:.2f}%로 {st.session_state.sim_actor_nm}!', 'black', '#D5DBDB'),
                                         unsafe_allow_html=True)
                             st.image(st.session_state.classification_img, use_column_width=True)
                             apply_beautyGAN_btn = st.button('메이크업 따라하기')
