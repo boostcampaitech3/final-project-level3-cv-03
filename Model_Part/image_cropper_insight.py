@@ -35,7 +35,7 @@ insightface.utils.face_align.src_map = {CROPPED_IMG_SIZE : insightface.utils.fac
 app = FaceAnalysis(allowed_modules=['detection'], providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
 app.prepare(ctx_id=0, det_size=(DET_SIZE, DET_SIZE))
 
-count= 170
+count= 0 ## 해당 iter부터 다시 진행
 for index, actor in tqdm(enumerate(Path(IMG_DIR_PATH).iterdir())):
     print(actor.name)
     if index < count:
