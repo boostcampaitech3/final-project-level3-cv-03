@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -61,13 +62,16 @@ def load_model(celeb_num=175):
 
 
 #### utils.py (transform) ####
-def transform_image(image_bytes: bytes) -> torch.Tensor:
+def transform_image(image_bytes: bytes, get_box: Boolean=False) -> torch.Tensor:
     img_ = np.frombuffer(image_bytes, dtype=np.uint8)
     img = cv2.imdecode(img_, cv2.IMREAD_COLOR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
-    boxes = app.get(img)
-    boxes = boxes[0]
+    boxes_raw = app.get(img)
+    boxes = boxes_raw[0]
     img = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
     img /= 255.0
     test_transform = A.Compose([A.Resize(380, 380), ToTensorV2()])
-    return test_transform(image=img)["image"].unsqueeze(0)
+    if get_box:
+        return test_transform(image=img)["image"].unsqueeze(0), boxes_raw
+    else:
+        return test_transform(image=img)["image"].unsqueeze(0)
