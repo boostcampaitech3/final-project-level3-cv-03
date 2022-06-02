@@ -12,3 +12,6 @@ streamlit==1.1.0
 tensorflow==1.15.0
 torchvision==0.11.1
 uvicorn==0.17.6
+
+google-cloud-bigquery==3.1.0
+python-json-logger==2.0.2
