@@ -14,6 +14,7 @@ from utils import transform_image, convert_bytes_to_image
 import webbrowser, json
 
 from front_streamlit import external_components as ec
+from models.efficientnet import efficientnet_model
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -63,8 +64,9 @@ def main():
     init_session_state()
 
     # Show input guideline message
-    col1, col2, col3 = st.columns(3)
-    with col2:
+    _, main_col2, _ = st.columns(3)
+    with main_col2:
+        add_height(5)
         input_guide = st.empty()
         input_guide.markdown(ec.bootstrap_warning("※ 아래에 정면 사진을 올려주세요 ※"), unsafe_allow_html=True)
         holder = st.empty()
@@ -84,26 +86,33 @@ def main():
             ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
             ]
         
-        # Show user uploaded image
-        if st.session_state.uploaded_file:
-            with col2:
-                add_height(2)
-                st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.5), unsafe_allow_html=True)
-                user_img_field = st.empty()
-                user_img_field.image(uploaded_file, use_column_width=True)
-                holder.empty()
-                input_guide.empty()
-        with sub_col2:
-            find_actor_btn = st.button('닮은 배우 찾기')
-            if find_actor_btn:
-                st.session_state.find_actor_clicked = True
+        # Detect faces in the uploaded file
+        rslt, boxes = efficientnet_model.transform_image(image_bytes, True)
+        num_faces = len(boxes)
+
+        # Number of face check branch
+        if num_faces == 0:
+            with main_col2:
+                st.error('''죄송합니다. 사진에서 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
+        else:
+            # Show user uploaded image
+            if st.session_state.uploaded_file:
+                with col2:
+                    st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.5), unsafe_allow_html=True)
+                    user_img_field = st.empty()
+                    user_img_field.image(uploaded_file, use_column_width=True)
+                    holder.empty()
+                    input_guide.empty()
+            with sub_col2:
+                find_actor_btn = st.button('닮은 배우 찾기')
+                if find_actor_btn:
+                    st.session_state.find_actor_clicked = True
                     
 
         # Get similar actor result and beautyGAN result
         if st.session_state.find_actor_clicked:
             with col3:
                 if not st.session_state.classification_done:
-                    add_height(2)
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
                         response_actor = requests.post("http://localhost:8008/actorclass", files=files)
                         st.session_state.sim_percent = response_actor.json()['percentage']
@@ -140,16 +149,13 @@ def main():
                                 st.session_state.uploaded_file = False
                                 st.session_state.find_actor_clicked = False
                                 st.session_state.refresh = True
-                                # init_session_state()
                                 st.experimental_rerun()
-                                # st.write(st.session_state)
                         with sub_col4:
                             apply_beautyGAN_btn = st.button('메이크업 해보기')
                             if apply_beautyGAN_btn:
                                 st.session_state.apply_beautyGAN = True
                 else:                        
                     # Show similar actor image
-                    add_height(2)
                     st.markdown(ec.template_subheading(
                         f'{st.session_state.sim_actor_nm}님과 {st.session_state.sim_percent*100:.1f}% 유사합니다!',
                         'black', '#D5DBDB', 1.5),
@@ -163,9 +169,7 @@ def main():
                             st.session_state.uploaded_file = False
                             st.session_state.find_actor_clicked = False
                             st.session_state.refresh = True
-                            # init_session_state()
                             st.experimental_rerun()
-                            # st.write(st.session_state)
                     with sub_col4:
                         apply_beautyGAN_btn = st.button('메이크업 해보기')
                         if apply_beautyGAN_btn:
