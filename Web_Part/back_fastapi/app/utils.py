@@ -1,35 +1,59 @@
 from ast import Bytes
 import base64
 import PIL
-import dlib
 from PIL import Image
 import numpy as np
 import io, json, requests, random
 
+import albumentations as A
 
-detector = dlib.get_frontal_face_detector()  # 얼굴 영역 인식 모델 로드
-sp = dlib.shape_predictor("./models/beautygan/weights/shape_predictor_5_face_landmarks.dat")
+import insightface
+from insightface.utils.face_align import *
+from insightface.utils.face_align import norm_crop as norm_crop
+from insightface.app import FaceAnalysis
+
+CROPPED_IMG_SIZE = 1024 ##
+
+insightface.utils.face_align.src_map = {
+    256 : insightface.utils.face_align.src * 256 / 112,
+    380 : insightface.utils.face_align.src * 380 / 112,
+    1024 : insightface.utils.face_align.src * 1024 / 112
+}
+
+app = FaceAnalysis(allowed_modules=['detection'], providers=['CPUExecutionProvider'])
+app.prepare(ctx_id=0, det_size=(256, 256))
 
 def preprocess(img):
     return img / 127.5 - 1.0  # 0 ~ 255 -> -1 ~ 1
 
+
 def postprocess(img):
     return (img + 1.0) * 127.5  # -1 ~ 1 -> 0 ~ 255
 
+
 def align_faces(img):  # 원본이미지를 넣으면 align 완료된 얼굴이미지 반환하는 함수
-    dets = detector(img, 1)
-    objs = dlib.full_object_detections()
-    for detection in dets:
-        s = sp(img, detection)
-        objs.append(s)
-    faces = dlib.get_face_chips(img, objs, size=256, padding=0.35)
-    return faces
+    boxes_raw = app.get(img)
+    
+    max_area = 0
+    max_index = -1
+    for index, box in enumerate(boxes_raw):
+        bbox = box['bbox']
+        if max_area < (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]):
+            max_area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1])
+            max_index = index
+    boxes = boxes_raw[max_index]
+
+    abc = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
+    abc = cv2.resize(abc, (256, 256), interpolation= cv2.INTER_AREA) ## 축소할 때 좋은 interplation 방법
+    # faces = []
+    # faces.append(abc)
+    return abc
 
 def transform_image(image_bytes: bytes):
     image = Image.open(io.BytesIO(image_bytes))
     image = image.convert("RGB")
     image_array = np.array(image)
-    img = align_faces(image_array)[0]
+    img = align_faces(image_array)
     return img
 
 def from_image_to_bytes(img: PIL.Image) -> Bytes:
