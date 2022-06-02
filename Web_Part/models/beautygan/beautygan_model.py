@@ -12,6 +12,7 @@ def postprocess(img):
 
 def get_beautygan(moedl_path: str = "./models/beautygan/weights/model.meta"):
     # 세션 생성
+    tf.reset_default_graph()
     sess = tf.Session()    
     sess.run(tf.global_variables_initializer())
     # 모델의 그래프를 불러오기
