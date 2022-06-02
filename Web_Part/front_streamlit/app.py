@@ -1,20 +1,19 @@
-from distutils.fancy_getopt import fancy_getopt
+# from distutils.fancy_getopt import fancy_getopt
 import io
 from turtle import onclick
-import cv2
+# import cv2
 import requests
 import base64 # ASCII string -> bytes
 import streamlit as st
-import tensorflow as tf
+# import tensorflow as tf
 from PIL import Image
-from copy import deepcopy
-from time import sleep
+# from copy import deepcopy
+# from time import sleep
 
-from utils import transform_image, convert_bytes_to_image
-import webbrowser, json
+from utils import convert_bytes_to_image
+# import webbrowser, json
 
 from front_streamlit import external_components as ec
-from models.efficientnet import efficientnet_model
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -81,21 +80,26 @@ def main():
         st.session_state.refresh = False
         st.session_state.uploaded_file = True
         image_bytes = uploaded_file.getvalue()
-        no_makeup = transform_image(image_bytes)
+        # no_makeup = transform_image(image_bytes)
         files = [
             ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
             ]
         
+        response_face_detect = requests.post("http://localhost:8008/actorclass/detect", files=files)
+        
         # Detect faces in the uploaded file
-        rslt, boxes = efficientnet_model.transform_image(image_bytes, True)
-        num_faces = len(boxes)
-
+        num_faces = response_face_detect.json()["num_box"]
+        
         # Number of face check branch
         if num_faces == 0:
             with main_col2:
                 st.error('''죄송합니다. 사진에서 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
         else:
             # Show user uploaded image
+            cropped_img = response_face_detect.json()["result"]
+            # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
+            bytes_list_1 = list(map(lambda x: base64.b64decode(x), cropped_img))
+            image_list_1 = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list_1))
             if st.session_state.uploaded_file:
                 with col2:
                     st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.5), unsafe_allow_html=True)
@@ -180,9 +184,6 @@ def main():
             image_bytes = uploaded_file.getvalue() # binary 형식
             ref_bytes = st.session_state.classification_img 
 
-            def crop_face(image_raw):
-                return image_box
-
             st.write("")
             st.write("")
             st.write("")
@@ -190,7 +191,7 @@ def main():
 
             col1, col2, col3, col4, col5 = st.columns(5)
             with col2:
-                st.image(no_makeup, use_column_width=True)
+                st.image(image_list_1[0], use_column_width=True) ############
                 st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
             with col3:
                 st.image(st.session_state.beautyGAN_img_list[0], use_column_width=True)
