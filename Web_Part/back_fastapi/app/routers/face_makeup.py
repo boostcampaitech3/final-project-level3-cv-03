@@ -1,3 +1,5 @@
+import os
+import time
 from fastapi import APIRouter, UploadFile, File
 from fastapi.param_functions import Depends
 from pydantic import BaseModel
@@ -5,10 +7,13 @@ from typing import List, Optional
 from models.beautygan.beautygan_model import get_beautygan, transfer
 import base64, io
 
+from logger import logger
+
 router = APIRouter(
     prefix="/beauty",
     tags=["beautygan"],
 )
+
 
 class TransferImage(BaseModel):
     result: Optional[List[str]]
@@ -25,8 +30,11 @@ async def make_transfer(
     image_bytes = await files[0].read() # user image
     ref_bytes = await files[1].read() # refer image
 
+    start = time.time() # start time for checking inference time!
+
     # np.ndarray -> PIL 이미지 -> ASCII코드로 변환된 bytes 데이터(str)
     transfer_result, transfer_refer = transfer(sess, graph, image_bytes, ref_bytes)
     product = TransferImage(result=[transfer_result, transfer_refer])
 
+    logger.info(f"BeautyGAN Inference : {time.time() - start:.5f}") # beautygan inference time
     return product

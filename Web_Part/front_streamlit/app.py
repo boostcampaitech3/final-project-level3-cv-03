@@ -1,15 +1,12 @@
-
 # from distutils.fancy_getopt import fancy_getopt
 import io
+import time
 from turtle import onclick
-# import cv2
 import requests
 import base64 # ASCII string -> bytes
+from logger import logger
 import streamlit as st
-# import tensorflow as tf
 from PIL import Image
-# from copy import deepcopy
-# from time import sleep
 
 from utils import convert_bytes_to_image
 # import webbrowser, json
@@ -28,7 +25,7 @@ def add_height(n: int=1):
 def new_file():
     st.session_state.refresh = False
 
-    
+
 #%% Main function
 def main():
     global uploaded_file
@@ -43,11 +40,21 @@ def main():
     st.markdown(ec.template_navbar(), unsafe_allow_html=True)
     st.markdown(ec.template_cover_heading('Look-Alike Actor'), unsafe_allow_html=True)
 
+    def reset(session_state):
+        for key in session_state:
+            session_state[key] = False
+        session_state['num_face'] = -1
+        session_state['refresh'] = True
+        return session_state
+    
     # Initialize session state key for logic
     def init_session_state():
         session_keys = [
             'refresh',
             'uploaded_file',
+            'detected', ## 사용자 이미지에서 얼굴이 탐지 되었는지
+            'num_face', ## 얼굴 개수
+            'detect_result', ## detect 결과
             'find_actor_clicked',
             'apply_beautyGAN', 
             'classification_done', 
@@ -55,12 +62,15 @@ def main():
             'beautyGAN_img_list',
             'sim_actor_nm'
             'sim_percent',
+            'cls_start_time',
+            'beauty_start_time'
             ]
 
         for session_key in session_keys:
             if session_key not in st.session_state:
                 st.session_state[session_key] = False
-
+            st.session_state['num_face'] = -1
+    
     init_session_state()
 
     # Show input guideline message
@@ -78,26 +88,28 @@ def main():
     
     # If get user image
     if uploaded_file and not st.session_state.refresh:
-        st.session_state.refresh = False
         st.session_state.uploaded_file = True
         image_bytes = uploaded_file.getvalue()
-        # no_makeup = transform_image(image_bytes)
         files = [
             ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
             ]
         
-        response_face_detect = requests.post("http://localhost:8008/actorclass/detect", files=files)
-        
-        # Detect faces in the uploaded file
-        num_faces = response_face_detect.json()["num_box"]
+        if not st.session_state.detected: ## detect를 수행했는지 (중복수행 방지)
+            st.session_state.detect_result = requests.post("http://localhost:8008/actorclass/detect", files=files)
+            # Detect faces in the uploaded file
+            st.session_state.num_face = st.session_state.detect_result.json()["num_box"]
+            st.session_state.detected = True
+            logger.info(f"Number of Faces : {st.session_state.num_face}")
         
         # Number of face check branch
-        if num_faces == 0:
+        if st.session_state.detected and st.session_state.num_face == 0:
             with main_col2:
                 st.error('''죄송합니다. 사진에서 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
-        else:
+                st.session_state.detected = False
+                st.session_state.num_face = -1
+        elif st.session_state.detected:
             # Show user uploaded image
-            cropped_img = response_face_detect.json()["result"]
+            cropped_img = st.session_state.detect_result.json()["result"]
             # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
             bytes_list_1 = list(map(lambda x: base64.b64decode(x), cropped_img))
             image_list_1 = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list_1))
@@ -119,20 +131,25 @@ def main():
             with col3:
                 if not st.session_state.classification_done:
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
+                        st.session_state.cls_start_time = time.time() # inference
                         response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+                        logger.info(f"Classification Inference Total Time : {time.time() - st.session_state.cls_start_time:.5f}")
                         st.session_state.sim_percent = response_actor.json()['percentage']
                         st.session_state.sim_actor_nm = response_actor.json()['name']
+                        logger.info(f"Actor : {st.session_state.sim_actor_nm} | Percent : {st.session_state.sim_percent :.3f}")
                         st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
                         # beautyGAN에 보내줄 refer image 추가
                         actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
                         files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
-                                                
+                        
                         st.session_state.classification_done = True
 
                         # TODO: Get beautyGAN result
+                        st.session_state.beauty_start_time = time.time()
                         response = requests.post("http://localhost:8008/beauty", files=files)
                         output_img = response.json()["result"]
-                    
+                        logger.info(f"BeautyGAN Inference Total Time : {time.time() - st.session_state.beauty_start_time:.5f}")
+
                         # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
                         bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
                         image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
@@ -146,14 +163,11 @@ def main():
                             'black', '#D5DBDB', 1.5),
                                 unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
+                        logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
                         with sub_col3:
                             refresh_btn = st.button('처음부터 다시하기')
                             if refresh_btn:
-                                st.session_state.apply_beautyGAN = False
-                                st.session_state.classification_done = False
-                                st.session_state.uploaded_file = False
-                                st.session_state.find_actor_clicked = False
-                                st.session_state.refresh = True
+                                st.session_state = reset(st.session_state)
                                 st.experimental_rerun()
                         with sub_col4:
                             apply_beautyGAN_btn = st.button('메이크업 해보기')
@@ -169,11 +183,7 @@ def main():
                     with sub_col3:
                         refresh_btn = st.button('처음부터 다시하기')
                         if refresh_btn:
-                            st.session_state.apply_beautyGAN = False
-                            st.session_state.classification_done = False
-                            st.session_state.uploaded_file = False
-                            st.session_state.find_actor_clicked = False
-                            st.session_state.refresh = True
+                            st.session_state = reset(st.session_state)
                             st.experimental_rerun()
                     with sub_col4:
                         apply_beautyGAN_btn = st.button('메이크업 해보기')
