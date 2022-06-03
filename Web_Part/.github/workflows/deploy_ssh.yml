@@ -1,0 +1,24 @@
+name: CICD-SSH
+on:
+  push:
+      branches: [ main ]
+      paths:
+        - 'Web_Part/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }} 
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+            source ~/miniconda3/etc/profile.d/conda.sh
+            conda activate final-1
+            cd ${{ github.event.repository.name }}
+            git pull origin main
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
