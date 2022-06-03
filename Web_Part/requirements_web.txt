@@ -3,6 +3,8 @@ fastapi==0.78.0
 google-api-python-client==2.48.0
 google-auth-oauthlib==0.5.1
 google-cloud-storage==2.3.0
+google-cloud-bigquery==3.1.0
+python-json-logger==2.0.2
 insightface==0.6.2
 onnxruntime==1.11.1
 opencv-python==4.5.1.48

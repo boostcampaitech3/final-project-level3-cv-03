@@ -1,0 +1,205 @@
+{
+	"actor": [
+		{
+			"id": 0,
+			"name": "공유",
+			"name_en": "GongYu",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/GongYu_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/GongYu_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/GongYu_3.jpg"
+			]
+		},
+		{
+			"id": 1,
+			"name": "권나라",
+			"name_en": "KwonNara",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/KwonNara_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/KwonNara_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/KwonNara_3.jpg"
+			]
+		},
+		{
+			"id": 2,
+			"name": "문채원",
+			"name_en": "MoonChaewon",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/MoonChaewon_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/MoonChaewon_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/MoonChaewon_3.jpg"
+			]
+		},
+		{
+			"id": 3,
+			"name": "박하선",
+			"name_en": "ParkHasun",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ParkHasun_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ParkHasun_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ParkHasun_3.jpg"
+			]
+		},
+		{
+			"id": 4,
+			"name": "배두나",
+			"name_en": "BaeDoona",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/BaeDoona_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/BaeDoona_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/BaeDoona_3.jpg"
+			]
+		},
+		{
+			"id": 5,
+			"name": "신민아",
+			"name_en": "ShinMina",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinMina_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinMina_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinMina_3.jpg"
+			]
+		},
+		{
+			"id": 6,
+			"name": "신성록",
+			"name_en": "ShinSungrok",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinSungrok_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinSungrok_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ShinSungrok_3.jpg"
+			]
+		},
+		{
+			"id": 7,
+			"name": "안보현",
+			"name_en": "AnBohyun",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/AnBohyun_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/AnBohyun_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/AnBohyun_3.jpg"
+			]
+		},
+		{
+			"id": 8,
+			"name": "여진구",
+			"name_en": "YeoJingu",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YeoJingu_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YeoJingu_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YeoJingu_3.jpg"
+			]
+		},
+		{
+			"id": 9,
+			"name": "유아인",
+			"name_en": "YooAin",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YooAin_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YooAin_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/YooAin_3.jpg"
+			]
+		},
+		{
+			"id": 10,
+			"name": "이다희",
+			"name_en": "LeeDahee",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeDahee_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeDahee_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeDahee_3.jpg"
+			]
+		},
+		{
+			"id": 11,
+			"name": "이병헌",
+			"name_en": "LeeByungheon",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeByungheon_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeByungheon_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeByungheon_3.jpg"
+			]
+		},
+		{
+			"id": 12,
+			"name": "이선균",
+			"name_en": "LeeSunkyun",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSunkyun_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSunkyun_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSunkyun_3.jpg"
+			]
+		},
+		{
+			"id": 13,
+			"name": "이시영",
+			"name_en": "LeeSiyoung",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSiyoung_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSiyoung_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/LeeSiyoung_3.jpg"
+			]
+		},
+		{
+			"id": 14,
+			"name": "전미도",
+			"name_en": "JeonMido",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JeonMido_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JeonMido_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JeonMido_3.jpg"
+			]
+		},
+		{
+			"id": 15,
+			"name": "정은지",
+			"name_en": "JungEunji",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JungEunji_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JungEunji_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/JungEunji_3.jpg"
+			]
+		},
+		{
+			"id": 16,
+			"name": "조정석",
+			"name_en": "ChoJungseok",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChoJungseok_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChoJungseok_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChoJungseok_3.jpg"
+			]
+		},
+		{
+			"id": 17,
+			"name": "차승원",
+			"name_en": "ChaSeungwon",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChaSeungwon_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChaSeungwon_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/ChaSeungwon_3.jpg"
+			]
+		},
+		{
+			"id": 18,
+			"name": "한선화",
+			"name_en": "HanSunhwa",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HanSunhwa_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HanSunhwa_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HanSunhwa_3.jpg"
+			]
+		},
+		{
+			"id": 19,
+			"name": "현빈",
+			"name_en": "HyunBin",
+			"image": [
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HyunBin_1.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HyunBin_2.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HyunBin_3.jpg",
+				"https://storage.googleapis.com/bitcoin_images_storage/actor_en/HyunBin_4.jpg"
+			]
+		}
+	]
+}

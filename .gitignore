@@ -7,4 +7,9 @@ Web_Part/models/efficientnet/weights/efficientnet_b4_epoch_28_180.pt
 Web_Part/models/efficientnet/weights/efficientnet_b4_epoch_28.pt
 Web_Part/models/efficientnet/weights/efficientnet_b7_epoch_20.pt
 Web_Part/classification_fastapi/epoch_20.pt
-**/__pycache__/
+Web_Part/models/beautygan/__pycache__
+Web_Part/models/efficientnet/__pycache__
+Web_Part/front_streamlit/__pycache__
+Web_Part/back_fastapi/app/__pycache__
+Web_Part/back_fastapi/app/routers/__pycache__
+Web_Part/__pycache__
