@@ -1,3 +1,5 @@
+import os
+import time
 from fastapi import APIRouter, UploadFile, File
 from pydantic import BaseModel
 from fastapi.param_functions import Depends
@@ -5,6 +7,7 @@ from typing import List, Optional
 
 from models.efficientnet.efficientnet_model import load_model, get_prediction, convert_image
 from back_fastapi.app.utils import ref_actor_image
+from logger import logger
 
 router = APIRouter(
     prefix="/actorclass",
@@ -28,7 +31,11 @@ async def inference(files: List[UploadFile] = File(...), model=Depends(load_mode
     product = ''
     # for file in files:
     image_bytes = await files[0].read()
+    
+    start = time.time() # start time for checking inference time!
     predicted, percentage = get_prediction(model=model, image_bytes=image_bytes)
+    logger.info(f"Classification Inference : {time.time() - start:.5f}") # classification inference time
+    
     ref_actor, inference_result = ref_actor_image(predicted)
     product = InferenceResult(name=inference_result,ref_actor = ref_actor, percentage=percentage)
     
