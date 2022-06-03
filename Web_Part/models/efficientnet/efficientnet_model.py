@@ -48,7 +48,7 @@ def get_prediction(model, image_bytes):
     device = torch.device('cpu')
     img = transform_image(image_bytes=image_bytes).to(device)
     pred = model(img)
-    percentage = F.softmax(pred).max().item()
+    percentage = F.softmax(pred, dim=1).max().item()
     pred_index = pred.to("cpu").argmax()
     return pred_index, percentage
 

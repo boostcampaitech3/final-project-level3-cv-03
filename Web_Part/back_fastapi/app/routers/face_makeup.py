@@ -7,25 +7,13 @@ from typing import List, Optional
 from models.beautygan.beautygan_model import get_beautygan, transfer
 import base64, io
 
-from Web_Part.logger import get_ml_logger
+from logger import logger
 
 router = APIRouter(
     prefix="/beauty",
     tags=["beautygan"],
 )
 
-####################################
-from pathlib import Path
-
-here = Path(__file__)
-config_yaml_path = os.path.join(here.parents[2], "config.yaml")
-
-logger = get_ml_logger(
-    config_path=config_yaml_path,
-    credential_json_path="./app/online-service-logger.json", # FIXME
-    table_ref="tensile-stack-350418.online_serving_logs.inference_time", 
-)
-####################################
 
 class TransferImage(BaseModel):
     result: Optional[List[str]]

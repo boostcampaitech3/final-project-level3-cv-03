@@ -104,17 +104,18 @@ def get_ml_logger(
 
     return _logger
 
+from pathlib import Path
+
+here = Path(__file__)
+config_yaml_path = os.path.join(here.parent, "config.yaml")
+
+logger = get_ml_logger(
+    config_path=config_yaml_path,
+    credential_json_path="./online_logger_test.json",  # FIXME
+    table_ref="tensile-stack-350418.bitcoin_logs.final_project",  # FIXME: e.g., boostcamp-ai-tech-serving.online_serving_logs.mask_classification
+)
 
 if __name__ == "__main__":
-    from pathlib import Path
-
-    here = Path(__file__)
-    config_yaml_path = os.path.join(here.parent, "config.yaml")
-
-    logger = get_ml_logger(
-        config_path=config_yaml_path,
-        credential_json_path="./app/online-service-logger.json",  # FIXME
-        table_ref="product-test-351508.online_serving_log.overall_service",  # FIXME: e.g., boostcamp-ai-tech-serving.online_serving_logs.mask_classification
-    )
-    for _ in range(10):
-        logger.info("hello world")
+    
+    for _ in range(1):
+        logger.info("test!")

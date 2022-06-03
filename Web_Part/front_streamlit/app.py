@@ -1,9 +1,11 @@
 # from distutils.fancy_getopt import fancy_getopt
 import io
+import time
 from turtle import onclick
 # import cv2
 import requests
 import base64 # ASCII string -> bytes
+from logger import logger
 import streamlit as st
 # import tensorflow as tf
 from PIL import Image
@@ -27,7 +29,7 @@ def add_height(n: int=1):
 def new_file():
     st.session_state.refresh = False
 
-    
+
 #%% Main function
 def main():
     global uploaded_file
@@ -54,6 +56,8 @@ def main():
             'beautyGAN_img_list',
             'sim_actor_nm'
             'sim_percent',
+            'cls_start_time',
+            'beauty_start_time'
             ]
 
         for session_key in session_keys:
@@ -118,7 +122,9 @@ def main():
             with col3:
                 if not st.session_state.classification_done:
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
+                        st.session_state.cls_start_time = time.time()
                         response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+                        logger.info(f"Classification Inference Total Time : {time.time() - st.session_state.cls_start_time:.5f}")
                         st.session_state.sim_percent = response_actor.json()['percentage']
                         st.session_state.sim_actor_nm = response_actor.json()['name']
                         st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
@@ -129,9 +135,11 @@ def main():
                         st.session_state.classification_done = True
 
                         # TODO: Get beautyGAN result
+                        st.session_state.beauty_start_time = time.time()
                         response = requests.post("http://localhost:8008/beauty", files=files)
                         output_img = response.json()["result"]
-                    
+                        logger.info(f"BeautyGAN Inference Total Time : {time.time() - st.session_state.beauty_start_time:.5f}")
+
                         # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
                         bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
                         image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
