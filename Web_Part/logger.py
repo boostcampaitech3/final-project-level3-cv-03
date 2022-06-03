@@ -111,7 +111,7 @@ config_yaml_path = os.path.join(here.parent, "config.yaml")
 
 logger = get_ml_logger(
     config_path=config_yaml_path,
-    credential_json_path="./online_logger_test.json",  # FIXME
+    credential_json_path="./online_service_logger.json",  # FIXME
     table_ref="tensile-stack-350418.bitcoin_logs.final_project",  # FIXME: e.g., boostcamp-ai-tech-serving.online_serving_logs.mask_classification
 )
 
