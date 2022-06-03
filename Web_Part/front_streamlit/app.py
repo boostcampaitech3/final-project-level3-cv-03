@@ -93,6 +93,7 @@ def main():
         
         # Detect faces in the uploaded file
         num_faces = response_face_detect.json()["num_box"]
+        logger.info(f"Number of Faces : {num_faces}")
         
         # Number of face check branch
         if num_faces == 0:
@@ -122,16 +123,18 @@ def main():
             with col3:
                 if not st.session_state.classification_done:
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
-                        st.session_state.cls_start_time = time.time()
+                        st.session_state.cls_start_time = time.time() # inference
                         response_actor = requests.post("http://localhost:8008/actorclass", files=files)
                         logger.info(f"Classification Inference Total Time : {time.time() - st.session_state.cls_start_time:.5f}")
                         st.session_state.sim_percent = response_actor.json()['percentage']
                         st.session_state.sim_actor_nm = response_actor.json()['name']
+                        st.write(response_actor.json())
+                        logger.info(f"Actor : {st.session_state.sim_actor_nm} | Percent : {st.session_state.sim_percent :.3f}")
                         st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
                         # beautyGAN에 보내줄 refer image 추가
                         actor_to_bytes = base64.b64decode(response_actor.json()['ref_actor'])
                         files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
-                                                
+                        
                         st.session_state.classification_done = True
 
                         # TODO: Get beautyGAN result
@@ -153,6 +156,7 @@ def main():
                             'black', '#D5DBDB', 1.5),
                                 unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
+                        logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
                         with sub_col3:
                             refresh_btn = st.button('처음부터 다시하기')
                             if refresh_btn:
