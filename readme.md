@@ -38,9 +38,9 @@ Streamlit + FastAPI를 이용한 닮은꼴 화장 모델 온라인 서빙
    1. 가상 환경을 설정합니다
      
    2. 프로젝트의 의존성을 설치합니다
-      - `requirements_web.txt`를 사용하여 라이브러리를 설치합니다.    
+      - `requirements.txt`를 사용하여 라이브러리를 설치합니다.    
          ```shell
-         > pip install -r requirements_web.txt 
+         > pip install -r requirements.txt 
          ```
 
       
