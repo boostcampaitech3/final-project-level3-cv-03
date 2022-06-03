@@ -1,17 +1,12 @@
-
 # from distutils.fancy_getopt import fancy_getopt
 import io
 import time
 from turtle import onclick
-# import cv2
 import requests
 import base64 # ASCII string -> bytes
 from logger import logger
 import streamlit as st
-# import tensorflow as tf
 from PIL import Image
-# from copy import deepcopy
-# from time import sleep
 
 from utils import convert_bytes_to_image
 # import webbrowser, json
@@ -129,7 +124,6 @@ def main():
                         logger.info(f"Classification Inference Total Time : {time.time() - st.session_state.cls_start_time:.5f}")
                         st.session_state.sim_percent = response_actor.json()['percentage']
                         st.session_state.sim_actor_nm = response_actor.json()['name']
-                        st.write(response_actor.json())
                         logger.info(f"Actor : {st.session_state.sim_actor_nm} | Percent : {st.session_state.sim_percent :.3f}")
                         st.session_state.classification_img = convert_bytes_to_image(response_actor.json()['ref_actor'])
                         # beautyGAN에 보내줄 refer image 추가
