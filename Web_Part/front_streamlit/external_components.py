@@ -80,7 +80,7 @@ def template_navbar():
     return """
     <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="masthead-brand">배우고 싶니 v1.0.0</h3>
+          <h3 class="masthead-brand">배우고 싶니 v1.1.0</h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="#">Home</a>
             <a class="nav-link" href="#">Service Page</a>
