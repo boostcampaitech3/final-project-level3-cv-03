@@ -6,8 +6,8 @@ def apply_custom_button_style ():
     div.stButton > button:first-child {
         background-color: #616A6B;
         color: white;
-        height: 3em;
-        width: 11vw;
+        height: auto;
+        width: 100%;
         border-radius:5px;
         border:3px solid #000000;
         font-size:1vw;
