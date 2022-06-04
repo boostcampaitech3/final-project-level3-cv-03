@@ -14,3 +14,4 @@ Web_Part/back_fastapi/app/__pycache__
 Web_Part/back_fastapi/app/routers/__pycache__
 Web_Part/__pycache__
 Web_Part/online_service_logger.json
+Web_Part/log/info.log
