@@ -8,13 +8,16 @@ import torchvision
 import streamlit as st
 import numpy as np
 import io, cv2
+from ast import Bytes
+import PIL
+from PIL import Image
+import base64
+
 
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 
-from back_fastapi.app.utils import from_image_to_bytes
-from PIL import Image
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -35,6 +38,27 @@ app.prepare(ctx_id=0, det_size=(256, 256))
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+def from_image_to_bytes(img: PIL.Image) -> Bytes:
+    """
+    pillow image 객체를 bytes로 변환
+    """
+    # Pillow 이미지 객체를 Bytes로 변환
+    imgByteArr = io.BytesIO() # <class '_io.BytesIO'>
+    img.save(imgByteArr, format="jpeg") # PIL 이미지를 binary형태의 이름으로 저장
+    imgByteArr = imgByteArr.getvalue() # <class 'bytes'>
+    # Base64로 Bytes를 인코딩
+    encoded = base64.b64encode(imgByteArr) # <class 'bytes'>
+    # Base64로 ascii로 디코딩
+    decoded = encoded.decode("ascii") # <class 'str'>
+    
+    return decoded
+
+def from_bytes_to_numpy(image_bytes :bytes):
+    numpy_ = np.frombuffer(image_bytes, dtype=np.uint8) ## 1차원 numpy 배열로
+    nparray = cv2.imdecode(numpy_, cv2.IMREAD_COLOR) ## 3차원 numpy 배열로
+    nparray = cv2.cvtColor(nparray, cv2.COLOR_BGR2RGB).astype(np.float32) ## RGB변환 및 자료형 변환
+    return nparray
+    
 #### mdoel.py ####
 def efficientnet(celeb_num):
     model = torchvision.models.efficientnet_b4(pretrained=False)
@@ -65,35 +89,17 @@ def load_model(celeb_num=175):
 
 
 #### utils.py (transform) ####
-def transform_image(image_bytes: bytes, get_box: Boolean=False) -> torch.Tensor:
-    img_ = np.frombuffer(image_bytes, dtype=np.uint8)
-    img = cv2.imdecode(img_, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
-    boxes_raw = app.get(img)
+def transform_image(image_bytes: bytes) -> torch.Tensor:
+    img = from_bytes_to_numpy(image_bytes)
     
-    max_area = 0
-    max_index = -1
-    for index, box in enumerate(boxes_raw):
-        bbox = box['bbox']
-        if max_area < (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]):
-            max_area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1])
-            max_index = index
-    boxes = boxes_raw[max_index]
 
-
-    img = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
     img /= 255.0
-    test_transform = A.Compose([A.Resize(380, 380), ToTensorV2()])
-    if get_box:
-        return test_transform(image=img)["image"].unsqueeze(0), boxes_raw
-    else:
-        return test_transform(image=img)["image"].unsqueeze(0)
+    test_transform = A.Compose([ToTensorV2()])
+    return test_transform(image=img)["image"].unsqueeze(0)
 
 
 def convert_image(image_bytes: bytes):
-    img_ = np.frombuffer(image_bytes, dtype=np.uint8)
-    img = cv2.imdecode(img_, cv2.IMREAD_COLOR)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
+    img = from_bytes_to_numpy(image_bytes)
     boxes_raw = app.get(img)
     if len(boxes_raw) == 0:
 
