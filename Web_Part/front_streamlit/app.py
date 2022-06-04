@@ -85,7 +85,7 @@ def main():
     # Set columns to show uploaded image and classification result image
     _, col2, col3, _ = st.columns(4)
     _, sub_col2, sub_col3, sub_col4, _ = st.columns([2, 2, 1, 1, 2])
-    
+
     # If get user image
     if uploaded_file and not st.session_state.refresh:
         st.session_state.uploaded_file = True
@@ -132,7 +132,11 @@ def main():
                 if not st.session_state.classification_done:
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
                         st.session_state.cls_start_time = time.time() # inference
-                        response_actor = requests.post("http://localhost:8008/actorclass", files=files)
+                        cropped_to_bytes = base64.b64decode(cropped_img[0])
+                        classfication_files =  [
+                            ('files',(uploaded_file.name, cropped_to_bytes, uploaded_file.type))
+                        ]
+                        response_actor = requests.post("http://localhost:8008/actorclass", files=classfication_files)
                         logger.info(f"Classification Inference Total Time : {time.time() - st.session_state.cls_start_time:.5f}")
                         st.session_state.sim_percent = response_actor.json()['percentage']
                         st.session_state.sim_actor_nm = response_actor.json()['name']
