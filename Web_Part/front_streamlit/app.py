@@ -41,8 +41,8 @@ def main():
     ec.apply_custom_button_style()
 
     # Navigation bar and page title
-    st.markdown(ec.template_navbar(), unsafe_allow_html=True)
-    st.markdown(ec.template_cover_heading('Look-Alike Actor'), unsafe_allow_html=True)
+    # st.markdown(ec.template_navbar(), unsafe_allow_html=True)
+    st.markdown(ec.template_cover_heading('배우(되)고 싶니?'), unsafe_allow_html=True)
 
     def reset(session_state):
         for key in session_state:
@@ -83,13 +83,17 @@ def main():
 
     # Show input guideline message
     if not st.session_state['router']:
-        _, main_col2, _ = st.columns(3)
+        _, sub_main_col, _ = st.columns([5, 2, 5])
+        _, main_col2, _ = st.columns([3, 6, 3])
         with main_col2:
-            add_height(5)
             input_guide = st.empty()
-            input_guide.markdown(ec.bootstrap_warning("※ 아래에 정면 사진을 올려주세요 ※"), unsafe_allow_html=True)
+            input_guide.markdown(ec.bootstrap_warning("※ 위와 같이 얼굴 정면이 나온 사진을 올려주세요 ※"), unsafe_allow_html=True)
             holder = st.empty()
-            uploaded_file = holder.file_uploader("", type=["jpg", "jpeg", "png"], on_change=new_file)        
+            uploaded_file = holder.file_uploader("", type=["jpg", "jpeg", "png"], on_change=new_file)    
+        with sub_main_col:
+            add_height(5)
+            smp_img_panel = st.empty()
+            smp_img_panel.image('https://storage.googleapis.com/bitcoin_images_storage/thumbnail.jpg', width=200)
         
         # Set columns to show uploaded image and classification result image
         _, col2, col3, _ = st.columns(4)
@@ -131,6 +135,7 @@ def main():
                         user_img_field.image(uploaded_file, use_column_width=True)
                         holder.empty()
                         input_guide.empty()
+                        smp_img_panel.empty()
                 with sub_col2:
                     find_actor_btn = st.empty()
                     find_actor_btn.button('닮은 배우 찾기', on_click=find_actor_btn_callback)
