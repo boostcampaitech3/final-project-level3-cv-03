@@ -1,5 +1,26 @@
 import streamlit as st
 
+def set_bg_hack_url(url):
+    '''
+    A function to unpack an image from url and set as bg.
+    Returns
+    -------
+    The background.
+    '''
+        
+    st.markdown(
+         f"""
+         <style>
+         .stApp {{
+             background: url("{url}");
+             background-size: cover
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
+
+
 def apply_custom_button_style ():
     st.markdown("""
     <style>
@@ -93,7 +114,7 @@ def template_navbar():
 
 def template_cover_heading(head_title):
     return f"""
-    <h1 style="text-align:center; color:white; font-weight:bold; font-size:4.5vw">{head_title}</h1>
+    <h1 style="text-align:center; color:white; font-weight:bold; font-size:4.5vw; font:sans serif">{head_title}</h1>
     """
 
 

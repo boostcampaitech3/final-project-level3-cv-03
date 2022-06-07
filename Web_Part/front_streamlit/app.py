@@ -37,6 +37,9 @@ def main():
     with open('./front_streamlit/bootstrap.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+    # Apply backgroung image
+    ec.set_bg_hack_url('https://storage.googleapis.com/bitcoin_images_storage/desktop.png')
+
     # Apply custom streamlit button style
     ec.apply_custom_button_style()
 
@@ -120,7 +123,8 @@ def main():
             # Number of face check branch
             if st.session_state.detected and st.session_state.num_face == 0:
                 with main_col2:
-                    st.error('''죄송합니다. 사진에서 얼굴을 찾을 수 없습니다. 다른 이미지를 업로드해 주세요''')
+                    st.error('''죄송합니다. 사진에서 얼굴을 찾을 수 없습니다. \
+                        다른 이미지를 업로드해 주세요''')
                     st.session_state.detected = False
                     st.session_state.num_face = -1
             elif st.session_state.detected:
