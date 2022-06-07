@@ -136,7 +136,7 @@ def main():
                 st.session_state.image_list_1 = image_list_1
                 if st.session_state.uploaded_file:
                     with col2:
-                        st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.5), unsafe_allow_html=True)
+                        st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 2.5), unsafe_allow_html=True)
                         user_img_field = st.empty()
                         user_img_field.image(uploaded_file, use_column_width=True)
                         holder.empty()
@@ -194,7 +194,7 @@ def main():
                             # Show similar actor image
                             st.markdown(ec.template_subheading(
                                 f'{st.session_state.sim_actor_nm}님과 {st.session_state.sim_percent*100:.1f}% 유사합니다!',
-                                'black', '#D5DBDB', 1.5),
+                                'black', '#D5DBDB', 2.5),
                                     unsafe_allow_html=True)
                             st.image(st.session_state.classification_img, use_column_width=True)
                             logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
@@ -211,7 +211,7 @@ def main():
                         # Show similar actor image
                         st.markdown(ec.template_subheading(
                             f'{st.session_state.sim_actor_nm}님과 {st.session_state.sim_percent*100:.1f}% 유사합니다!',
-                            'black', '#D5DBDB', 1.5),
+                            'black', '#D5DBDB', 2.5),
                                                             unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
                         logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
@@ -242,13 +242,13 @@ def main():
         _, beautyGAN_btn_col, _  = st.columns([1, 3, 1])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
-            st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
+            st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 2), unsafe_allow_html=True)
         with col3:
             st.image(st.session_state.beautyGAN_img_list[0], use_column_width=True)
-            st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', '', 1.2), unsafe_allow_html=True)
+            st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', '', 2), unsafe_allow_html=True)
         with col4:
             st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
-            st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
+            st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 2), unsafe_allow_html=True)
         with beautyGAN_btn_col:
             refresh_btn = st.button('처음부터 다시하기')
             if refresh_btn:
