@@ -13,6 +13,7 @@ from utils import convert_bytes_to_image
 # import webbrowser, json
 
 from front_streamlit import external_components as ec
+import streamlit.components.v1 as components
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -41,6 +42,29 @@ def main():
     ec.apply_custom_button_style()
     # load script
     ec.script()
+    components.html('''
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <script type="text/javascript">
+            console.log("Hello World!");
+        </script>
+        <script>
+            if (!Kakao.isInitialized()) {
+                Kakao.init('77888');
+            }
+            var sendKakao = function() {
+                // 메시지 공유 함수
+            Kakao.Link.sendScrap({
+                requestUrl: 'http://www.simactor.site:30001', // 페이지 url
+                templateId: 77888, // 메시지템플릿 번호
+            });
+            };
+        </script>
+        // onclick으로 연결
+        <button onclick="sendKakao()">
+        <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오톡 공유" />
+        </button>
+
+        ''')
 
     # Navigation bar and page title
     st.markdown(ec.template_navbar(), unsafe_allow_html=True)

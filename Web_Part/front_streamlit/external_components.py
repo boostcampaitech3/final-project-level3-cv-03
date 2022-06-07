@@ -251,9 +251,8 @@ def test():
 	</div>
     """
 def script():
-    return"""
-    
-    <script type="text/javascript" async>
+    st.markdown("""
+    <script type="text/javascript">
         console.log("Hello World!");
     </script>
-    """
+    """, unsafe_allow_html=True)
