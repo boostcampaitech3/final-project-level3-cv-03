@@ -25,6 +25,9 @@ def add_height(n: int=1):
 def new_file():
     st.session_state.refresh = False
 
+def find_actor_btn_callback():
+    st.session_state.find_actor_clicked = True
+
 
 #%% Main function
 def main():
@@ -84,7 +87,7 @@ def main():
     
     # Set columns to show uploaded image and classification result image
     _, col2, col3, _ = st.columns(4)
-    _, sub_col2, sub_col3, sub_col4, _ = st.columns([2, 2, 1, 1, 2])
+    _, sub_col2, sub_col3, _ = st.columns(4)
 
     # If get user image
     if uploaded_file and not st.session_state.refresh:
@@ -121,13 +124,16 @@ def main():
                     holder.empty()
                     input_guide.empty()
             with sub_col2:
-                find_actor_btn = st.button('닮은 배우 찾기')
-                if find_actor_btn:
-                    st.session_state.find_actor_clicked = True
+                find_actor_btn = st.empty()
+                find_actor_btn.button('닮은 배우 찾기', on_click=find_actor_btn_callback)
+                # if find_actor_btn:
+                #     st.session_state.find_actor_clicked = True
                     
 
         # Get similar actor result and beautyGAN result
         if st.session_state.find_actor_clicked:
+            # Remove fint actor button
+            find_actor_btn.empty()
             with col3:
                 if not st.session_state.classification_done:
                     with st.spinner('당신과 닮은 배우를 찾는 중 입니다...'):
@@ -168,12 +174,12 @@ def main():
                                 unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
                         logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
-                        with sub_col3:
+                        with sub_col2:
                             refresh_btn = st.button('처음부터 다시하기')
                             if refresh_btn:
                                 st.session_state = reset(st.session_state)
                                 st.experimental_rerun()
-                        with sub_col4:
+                        with sub_col3:
                             apply_beautyGAN_btn = st.button('메이크업 해보기')
                             if apply_beautyGAN_btn:
                                 st.session_state.apply_beautyGAN = True
@@ -184,12 +190,12 @@ def main():
                         'black', '#D5DBDB', 1.5),
                                                         unsafe_allow_html=True)
                     st.image(st.session_state.classification_img, use_column_width=True)
-                    with sub_col3:
+                    with sub_col2:
                         refresh_btn = st.button('처음부터 다시하기')
                         if refresh_btn:
                             st.session_state = reset(st.session_state)
                             st.experimental_rerun()
-                    with sub_col4:
+                    with sub_col3:
                         apply_beautyGAN_btn = st.button('메이크업 해보기')
                         if apply_beautyGAN_btn:
                             st.session_state.apply_beautyGAN = True
