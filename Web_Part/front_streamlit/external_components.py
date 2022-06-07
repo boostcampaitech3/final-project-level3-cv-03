@@ -1,4 +1,5 @@
 import streamlit as st
+from urllib import parse
 
 def apply_custom_button_style ():
     st.markdown("""
@@ -126,7 +127,6 @@ def template_body():
                     <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
                 </p>
             </main>
-
             <footer class="mastfoot mt-auto">
                 <div class="inner">
                   <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -141,7 +141,15 @@ def template_body():
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    
+        <script language="javascript">
+            function shareLink() {
+                console.log('hello')
+                Kakao.Link.sendScrap({
+                    requestUrl: location.href
+                });
+            };
+        </script>
+        
     </body>
     """
 
@@ -197,4 +205,55 @@ def template_album():
             </div>
             </div>
         </div>
+    """
+
+def footer_button(link):
+    # share link, google form link
+    url_default_ks = "https://story.kakao.com/share?url="
+    url_default_fb = "https://www.facebook.com/sharer/sharer.php?u="
+    url_default_tw_txt = "https://twitter.com/intent/tweet?text="
+    url_default_tw_url = "&url="
+    url_default_naver = "http://share.naver.com/web/shareView.nhn?url="
+    title_default_naver = "&title="
+    # url_this_page =  location.href
+    url_this_page = 'http://www.simactor.site:30001/'
+    # title_this_page = document.title
+    title_this_page = 'simactor'
+
+    url_combine_ks = url_default_ks + url_this_page
+    url_combine_fb = url_default_fb + url_this_page
+    url_combine_tw = url_default_tw_txt + title_this_page + url_default_tw_url + url_this_page
+    # url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page)
+    return f"""
+    <div class="footer">
+        <div class="share-button">
+            <div style="width: 100%; text-align: center; margin-bottom: 64px;"> 
+                <!-- Facebook share button --> 
+                <a href="" onclick="window.open({url_combine_fb}, '', 'scrollbars=no, width=600, height=600'); return false;">
+                <img src="https://imgur.com/2pxqHxt.png" title="페이스북으로 공유하기" class="sharebtn_custom" style="width: 48px;"></a> 
+                <!-- Twitter share button --> 
+                <a href="" onclick="window.open({url_combine_tw}, '', 'scrollbars=no, width=600, height=600'); return false;">
+                <img src="https://imgur.com/z7V4qga.png" title="트위터로 공유하기" class="sharebtn_custom" style="width: 48px;"></a>  
+                <!-- Kakao story share button --> 
+                <a href="" onclick="window.open({url_combine_ks}, '', 'scrollbars=no, width=600, height=600'); return false;">
+                <img src="https://imgur.com/mIW39pd.jpg" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 48px;"></a>
+            </div>
+        </div>
+        <div class="google-form-button">
+            <a href="{link}">설문지 작성</a>
+        </div>
+    </div>
+    """
+def test():
+    return """
+    <div style="width:100%;border:0;padding:0;">
+        <a id="kakao-link-btn" href="javascript:kt2('9');"><button id="katalk2" class="btn btn-warning" type="button" style="width:100%;height: 66px;border-radius:0px;background-color:#d5d5d5;border:0;border-bottom-left-radius:7px;border-bottom-right-radius:7px;"><span style="font-size:1.1em"><font color="#000"><span style="font-size:1em;font-weight:bold;letter-spacing:-1px;"><i class="fas fa-comment fa-flip-horizontal" aria-hidden="true"></i> 니온 얼굴인식 카톡으로 공유하기</span><br><span style="font-size:0.85em;font-weight:normal;letter-spacing:-1px;">나에게 보내놓고 쓰거나, 친구에게 이 기능 알려주기</span></font></span></button></a>
+	</div>
+    """
+def script():
+    return"""
+    
+    <script type="text/javascript" async>
+        console.log("Hello World!");
+    </script>
     """

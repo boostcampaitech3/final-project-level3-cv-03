@@ -39,6 +39,8 @@ def main():
 
     # Apply custom streamlit button style
     ec.apply_custom_button_style()
+    # load script
+    ec.script()
 
     # Navigation bar and page title
     st.markdown(ec.template_navbar(), unsafe_allow_html=True)
@@ -235,6 +237,9 @@ def main():
             st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
     else:
         init_session_state()
+    link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+    st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+    st.markdown(ec.test(), unsafe_allow_html=True)
 
                     
 
@@ -244,6 +249,7 @@ st.set_page_config(
     page_title='배우고 싶니?', 
     layout="wide",
     )
+
 
 if __name__=='__main__':
     main()
