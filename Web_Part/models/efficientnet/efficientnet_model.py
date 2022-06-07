@@ -12,18 +12,16 @@ from ast import Bytes
 import PIL
 from PIL import Image
 import base64
-
-
+import math
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-
-
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 import insightface
 from insightface.utils.face_align import *
 from insightface.utils.face_align import norm_crop as norm_crop
+from insightface.utils.face_align import estimate_norm as estimate_norm
 from insightface.app import FaceAnalysis
 
 CROPPED_IMG_SIZE = 1024 ##
@@ -35,8 +33,6 @@ insightface.utils.face_align.src_map = {
 
 app = FaceAnalysis(allowed_modules=['detection'], providers=['CPUExecutionProvider'])
 app.prepare(ctx_id=0, det_size=(256, 256))
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def from_image_to_bytes(img: PIL.Image) -> Bytes:
     """
@@ -87,12 +83,40 @@ def load_model(celeb_num=175):
     # model.to(device)
     return model
 
+def norm_crop(img, landmark, image_size=112, mode='arcface'):
+    M, pose_index = estimate_norm(landmark, image_size, mode)
+
+    candidates = [(0, 0), (0, img.shape[1]), (img.shape[0], 0), (img.shape[0], img.shape[1])]
+
+    xs, ys = [], []
+    for y, x in candidates:
+        a = M[0 , 0] * x + M[0, 1] * y + M[0, 2]
+        b = M[1 , 0] * x + M[1, 1] * y + M[1, 2]
+        xs.append(a)
+        ys.append(b)
+
+    image_box = [math.floor(min(ys)), math.ceil(max(ys)), math.floor(min(xs)), math.ceil(max(xs))]
+
+    if image_box[0] < 0:
+        image_box[0] = 0
+    if image_box[1] > image_size:
+        image_box[1] = image_size
+    if image_box[2] < 0:
+        image_box[2] = 0
+    if image_box[3] > image_size:
+        image_box[3] = image_size
+    
+    flag = False ## 얼굴 이미지가 전체 크기보다 작은지
+    for isin in image_box:
+        if isin > 0 and isin < image_size:
+            flag = True
+            break
+    warped = cv2.warpAffine(img, M, (image_size, image_size), borderValue=0.0)
+    return warped, image_box, flag
 
 #### utils.py (transform) ####
 def transform_image(image_bytes: bytes) -> torch.Tensor:
     img = from_bytes_to_numpy(image_bytes)
-    
-
     img /= 255.0
     test_transform = A.Compose([ToTensorV2()])
     return test_transform(image=img)["image"].unsqueeze(0)
@@ -115,8 +139,31 @@ def convert_image(image_bytes: bytes):
                 max_index = index
         boxes = boxes_raw[max_index]
 
-        img = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
-        img = cv2.resize(img, (380, 380), interpolation=cv2.INTER_AREA)
+        img, image_box, flag = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
+        if flag is True: ##이미지 모서리에 공백이 있는 경우 
+            w = image_box[3] -image_box[2]
+            h = image_box[1] -image_box[0]
+            diff = math.floor(abs(w-h) / 2)
+            output = None
+            if w > h:
+                if (w-h) % 2 ==1:
+                    output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]-1]
+                else:
+                    output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]]
+            elif w < h:
+                if (w-h) % 2 ==1:
+                    output = img[image_box[0] : image_box[1]-1, image_box[2]-diff : image_box[3]+diff]
+                else:
+                    output = img[image_box[0] : image_box[1],   image_box[2]-diff : image_box[3]+diff]
+            else:
+                output = img[image_box[0] : image_box[1], image_box[2] : image_box[3]]
+        
+            if output.shape[0] < 380:
+                img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_LINEAR)
+            else: 
+                img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_AREA)
+        else:
+            img = cv2.resize(img, dsize=(380, 380), interpolation=cv2.INTER_AREA)
         img = img.astype(np.uint8)
         pil_image = Image.fromarray(img)
         output_img_bytes = from_image_to_bytes(pil_image)
