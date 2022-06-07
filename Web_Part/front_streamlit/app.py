@@ -61,6 +61,7 @@ def main():
             'num_face', ## 얼굴 개수
             'detect_result', ## detect 결과
             'find_actor_clicked',
+            'incorrect_beautyGAN', ## 이미지가 beautyGAN에 적절한지
             'apply_beautyGAN', 
             'classification_done', 
             'classification_img',
@@ -166,15 +167,19 @@ def main():
                             # TODO: Get beautyGAN result
                             st.session_state.beauty_start_time = time.time()
                             response = requests.post("http://localhost:8008/beauty", files=files)
-                            output_img = response.json()["result"]
-                            logger.info(f"BeautyGAN Inference Total Time : {time.time() - st.session_state.beauty_start_time:.5f}")
+                            result_beauty = response.json()["result"]
+                            if result_beauty == "Incorrect": ## BeautyGAN 이미지 에러!
+                                st.session_state.incorrect_beautyGAN = True
+                            else:
+                                output_img = result_beauty
+                                logger.info(f"BeautyGAN Inference Total Time : {time.time() - st.session_state.beauty_start_time:.5f}")
 
-                            # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
-                            bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
-                            image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
+                                # ASCII코드로 변환된 bytes 데이터(str) -> bytes로 변환 -> 이미지로 디코딩
+                                bytes_list = list(map(lambda x: base64.b64decode(x), output_img))
+                                image_list = list(map(lambda x: Image.open(io.BytesIO(x)), bytes_list))
 
-                            # Put beautyGAN result into the session state
-                            st.session_state.beautyGAN_img_list = image_list
+                                # Put beautyGAN result into the session state
+                                st.session_state.beautyGAN_img_list = image_list
 
                             # Show similar actor image
                             st.markdown(ec.template_subheading(
@@ -214,6 +219,10 @@ def main():
                                 st.experimental_rerun()
                                 
     elif st.session_state['router']:
+        ## BeautyGAN 이미지를 인식하지 못하는 경우!
+        if st.session_state.incorrect_beautyGAN:
+                st.error("저희의 AI 메이크업 아티스트가 얼굴을 제대로 인식하지 못했습니다. \
+                    눈, 코, 입이 잘 보이도록 사진을 찍어주세요!")
         # TODO: 이미지 View
         image_bytes = st.session_state.files.getvalue() # binary 형식
         ref_bytes = st.session_state.classification_img 
