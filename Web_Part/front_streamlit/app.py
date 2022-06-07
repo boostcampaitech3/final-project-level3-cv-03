@@ -7,6 +7,7 @@ import base64 # ASCII string -> bytes
 from logger import logger
 import streamlit as st
 from PIL import Image
+import webbrowser
 
 from utils import convert_bytes_to_image
 # import webbrowser, json
@@ -43,6 +44,7 @@ def main():
     def reset(session_state):
         for key in session_state:
             session_state[key] = False
+
         session_state['num_face'] = -1
         session_state['refresh'] = True
         return session_state
@@ -153,7 +155,7 @@ def main():
                             files.append(('files',(uploaded_file.name, actor_to_bytes, uploaded_file.type)))
                             
                             st.session_state.classification_done = True
-                            st.session_state.router = True
+                            
 
                             # TODO: Get beautyGAN result
                             st.session_state.beauty_start_time = time.time()
@@ -195,11 +197,15 @@ def main():
                             refresh_btn = st.button('처음부터 다시하기')
                             if refresh_btn:
                                 st.session_state = reset(st.session_state)
+                                st.session_state.router = False
                                 st.experimental_rerun()
                         with sub_col4:
                             apply_beautyGAN_btn = st.button('메이크업 해보기')
                             if apply_beautyGAN_btn:
+                                st.session_state.router = True
                                 st.session_state.apply_beautyGAN = True
+                                st.experimental_rerun()
+                                
     elif st.session_state['router']:
         st.write(st.session_state['apply_beautyGAN'], st.session_state['router'])
         # TODO: 이미지 View
