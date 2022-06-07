@@ -214,7 +214,6 @@ def main():
                                 st.experimental_rerun()
                                 
     elif st.session_state['router']:
-        st.write(st.session_state['apply_beautyGAN'], st.session_state['router'])
         # TODO: 이미지 View
         image_bytes = st.session_state.files.getvalue() # binary 형식
         ref_bytes = st.session_state.classification_img 
