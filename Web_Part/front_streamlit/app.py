@@ -93,7 +93,8 @@ def main():
         with sub_main_col:
             add_height(5)
             smp_img_panel = st.empty()
-            smp_img_panel.image('https://storage.googleapis.com/bitcoin_images_storage/thumbnail.jpg', width=200)
+            smp_img_panel.image('https://storage.googleapis.com/bitcoin_images_storage/thumbnail.jpg', 
+                                use_column_width='auto')
         
         # Set columns to show uploaded image and classification result image
         _, col2, col3, _ = st.columns(4)
@@ -221,14 +222,11 @@ def main():
     elif st.session_state['router']:
         # TODO: 이미지 View
         image_bytes = st.session_state.files.getvalue() # binary 형식
-        ref_bytes = st.session_state.classification_img 
 
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
+        add_height(4)
 
-        col1, col2, col3, col4, col5 = st.columns(5)
+        _, col2, col3, col4, _ = st.columns(5)
+        _, beautyGAN_btn_col, _  = st.columns([1, 3, 1])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
             st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
@@ -238,6 +236,12 @@ def main():
         with col4:
             st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
             st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 1.2), unsafe_allow_html=True)
+        with beautyGAN_btn_col:
+            refresh_btn = st.button('처음부터 다시하기')
+            if refresh_btn:
+                st.session_state = reset(st.session_state)
+                st.session_state.router = False
+                st.experimental_rerun()
     else:
         init_session_state()
 
