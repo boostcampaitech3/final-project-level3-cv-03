@@ -76,7 +76,8 @@ def ref_actor_image(predict : int):
     with open('actor.json', 'r', encoding="UTF-8") as f:
         json_data = json.loads(f.read())
     actor_list = [actor_data for actor_data in json_data["actor"] if actor_data["id"] == predict]
-    img_url = actor_list[0]["image"][random.randrange(0, 3)]
+    actor_images = actor_list[0]["image"]
+    img_url = actor_images[random.randrange(0, len(actor_images))]
     ref_image = Image.open(requests.get(img_url, stream=True).raw)
     ref_bytes_str = from_image_to_bytes(ref_image)
     return ref_bytes_str, actor_list[0]["name"]
