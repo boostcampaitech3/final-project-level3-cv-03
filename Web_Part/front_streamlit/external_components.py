@@ -30,7 +30,6 @@ def apply_custom_button_style ():
         height: auto;
         width: 100%;
         border-radius:25px;
-        border:3px solid #000000;
         font-size:2.5vh;
         font-weight: bold;
         margin: auto;
@@ -120,7 +119,7 @@ def template_cover_heading(head_title):
 
 def template_subheading(text: str, color: str='black', background_color: str=None, font_size: float=1):
     return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vh;border-radius:25px;">{text}</h2>
+    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vh; border-radius:25px; font-weight:bold;">{text}</h2>
     """
 
 
