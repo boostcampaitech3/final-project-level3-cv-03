@@ -131,4 +131,4 @@ def ref_actor_image(predict : int):
     img_url = actor_images[random.randrange(0, len(actor_images))]
     ref_image = Image.open(requests.get(img_url, stream=True).raw)
     ref_bytes_str = from_image_to_bytes(ref_image)
-    return ref_bytes_str, actor_list[0]["name"]
+    return ref_bytes_str, actor_list[0]["name"], img_url
