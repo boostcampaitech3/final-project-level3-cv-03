@@ -1,7 +1,10 @@
 /* ######################### */
 .stApp {
-    background: url("https://storage.googleapis.com/bitcoin_images_storage/Desktop.png");
+    background: url("https://storage.googleapis.com/bitcoin_images_storage/Desktop_40.png");
     background-size: cover
+}
+.css-18e3th9{
+    padding: 0rem 1rem 2rem;
 }
 
 .main{
@@ -16,81 +19,101 @@
     rgba(0,0,0, 0.5) 80% , 
     rgba(0,0,0, 0.4) 90% , 
     rgba(0,0,0, 0.3) 100%);
-  }
-  .google-form-button{
-    color: white !important;
-    display: block;
+}
+.google-form-button{
+color: white !important;
+display: block;
+text-align: center;
+font-size: 1.8vh;
+width: 18vh;
+padding: 1vh;
+margin: auto;
+border : 0.3vh white solid 
+}
+.google-form-button:link{
+text-decoration: none;
+} 
+.google-form-button:visited{
+text-decoration: none;
+} 
+.btn-footer {
+display: block;
+text-align: center;
+vertical-align: middle;
+padding-top: 9vh;
+}
+
+h1.like-a-actor {
+font-family: neon;
+color:white;
+font-size: 10vh;
+line-height: 9vw;
+text-shadow: 0 0 2vw yellow;
+}
+
+h1.like-a-actor {
+animation: neon 1s ease infinite;
+-moz-animation: neon 1s ease infinite;
+-webkit-animation: neon 1s ease infinite;
+}
+
+
+.like-a-actor {
+animation: flux 2s linear infinite;
+-moz-animation: flux 2s linear infinite;
+-webkit-animation: flux 2s linear infinite;
+-o-animation: flux 2s linear infinite;
+}
+.home-intro-div{
+    margin-top: 3vh;
+}
+.home-intro{
+    color: white;
+    font-size: 2vh ;
+    font-family: verdana;
     text-align: center;
-    font-size: 1.8vh;
-    width: 18vh;
-    padding: 1vh;
+    margin-bottom: 1rem;
+}
+.css-1l269bu{
+    display: none;
+}
+
+/* button style */
+div.stButton > button:first-child {
+    background-color: #616A6B;
+    color: white;
+    height: auto;
+    width: 100%;
+    border:3px solid #000000;
+    font-size:2.5vh;
+    font-weight: bold;
     margin: auto;
-    border : 0.3vh white solid 
-  }
-  .google-form-button:link{
-    text-decoration: none;
-  } 
-  .google-form-button:visited{
-    text-decoration: none;
-  } 
-  .btn-footer {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-  }
-  
-  .google-form-button {
-    font-family: neon;
-    color: #FB4264;
-    font-size: 9vw;
-    line-height: 9vw;
-    text-shadow: 0 0 3vw #F40A35;
-  }
-  
-  .e16nr0p33 {
-    font-family: neon;
-    color:white;
-    font-size: 9vh;
-    line-height: 9vw;
-    text-shadow: 0 0 2vw yellow;
-  }
-  
-  .e16nr0p33 {
-    animation: neon 1s ease infinite;
-    -moz-animation: neon 1s ease infinite;
-    -webkit-animation: neon 1s ease infinite;
-  }
-  
-  @keyframes google-form-button {
-    0%,
-    100% {
-      text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
-      color: #FED128;
-    }
-    50% {
-      text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
-      color: #806914;
-    }
-  }
-  
-  .e16nr0p33 {
-    animation: flux 2s linear infinite;
-    -moz-animation: flux 2s linear infinite;
-    -webkit-animation: flux 2s linear infinite;
-    -o-animation: flux 2s linear infinite;
-  }
-  
-  @keyframes e16nr0p33 {
-    0%,
-    100% {
-      text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
-      color: #28D7FE;
-    }
-    50% {
-      text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
-      color: #146C80;
-    }
-  }
+    display: block;
+}
+div.stButton > button:hover {
+    background:linear-gradient(to bottom, #D7DBDD 5%, #D7DBDD 100%);
+    background-color:#ABEBC6;
+    color: black;
+}
+div.stButton > button:active {
+    position:relative;
+    color: black;
+    top:0px;
+}
+.css-160hik1{
+    border-radius: 25px;
+}
+@keyframes like-a-actor {
+0%,
+100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+}
+50% {
+    text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
+    color: #146C80;
+}
+}
   
   
   

@@ -43,14 +43,13 @@ def main():
     # Apply backgroung image
     # ec.set_bg_hack_url('https://storage.googleapis.com/bitcoin_images_storage/desktop.png')
 
-    # Apply custom streamlit button style
-    ec.apply_custom_button_style()
+
     # load script
     
 
     # Navigation bar and page title
     # st.markdown(ec.template_navbar(), unsafe_allow_html=True)
-    st.markdown(ec.template_cover_heading('배우(되)고 싶니?'), unsafe_allow_html=True)
+    st.markdown(ec.template_cover_heading('LIKE A STAR'), unsafe_allow_html=True)
 
     def reset(session_state):
         for key in session_state:
@@ -96,14 +95,14 @@ def main():
         _, main_col2, _ = st.columns([3, 6, 3])
         with main_col2:
             input_guide = st.empty()
-            input_guide.markdown(ec.bootstrap_warning("※ 위와 같이 얼굴 정면이 나온 사진을 올려주세요 ※"), unsafe_allow_html=True)
+            input_guide.markdown(ec.bootstrap_intro(["60여 편의 드라마 작품 중에서 닮은 배우를 찾아드립니다.","멍충~멍충~"]), unsafe_allow_html=True)
             holder = st.empty()
             uploaded_file = holder.file_uploader("", type=["jpg", "jpeg", "png"], on_change=new_file)    
         with sub_main_col:
             add_height(5)
             smp_img_panel = st.empty()
-            smp_img_panel.image('https://storage.googleapis.com/bitcoin_images_storage/thumbnail.jpg', 
-                                use_column_width='auto')
+            # smp_img_panel.image('https://storage.googleapis.com/bitcoin_images_storage/thumbnail.jpg', 
+            #                     use_column_width='auto')
         
         # Set columns to show uploaded image and classification result image
         _, col2, col3, _ = st.columns(4)
@@ -258,7 +257,7 @@ def main():
         # TODO: 이미지 View
         image_bytes = st.session_state.files.getvalue() # binary 형식
 
-        add_height(4)
+        # add_height(4)
 
         _, col2, col3, col4, _ = st.columns(5)
         _, beautyGAN_btn_col, _  = st.columns([1, 3, 1])
@@ -277,10 +276,11 @@ def main():
                 st.session_state = reset(st.session_state)
                 st.session_state.router = False
                 st.experimental_rerun()
+        link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+        st.markdown(ec.footer_button(link), unsafe_allow_html=True)
     else:
         init_session_state()
-    link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
-    st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+    
 
                     
 

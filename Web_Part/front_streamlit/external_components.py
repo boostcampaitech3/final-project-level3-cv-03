@@ -21,36 +21,6 @@ from urllib import parse
 #          unsafe_allow_html=True
 #      )
 
-
-def apply_custom_button_style ():
-    st.markdown("""
-    <style>
-    div.stButton > button:first-child {
-        background-color: #616A6B;
-        color: white;
-        height: auto;
-        width: 100%;
-        border-radius:25px;
-        border:3px solid #000000;
-        font-size:2.5vh;
-        font-weight: bold;
-        margin: auto;
-        display: block;
-    }
-
-    div.stButton > button:hover {
-        background:linear-gradient(to bottom, #D7DBDD 5%, #D7DBDD 100%);
-        background-color:#ABEBC6;
-        color: black;
-    }
-
-    div.stButton > button:active {
-        position:relative;
-        color: black;
-        top:0px;
-    }
-
-    </style>""", unsafe_allow_html=True)
     
 def bootstrap_block_level_button(text):
     return f"""
@@ -72,12 +42,19 @@ def bootstrap_card():
     """
 
 
-def bootstrap_warning(text: str):
-    return f"""
-        <div class="alert alert-dark" role="alert", style="margin:0rem; background-color:#FCF3CF; margin-top:18px; font-family:verdana; font-size:1.5vw; text-align:center;">
+def bootstrap_intro(texts: list):
+    text_tag = ''
+    for text in texts:
+        text_tag += f"""
+        <div class="home-intro" role="alert">
         {text}
         </div>
-    """
+        """
+    return f"""
+        <div class="home-intro-div">
+            {text_tag}
+        </div>
+        """
 
 
 def bootstrap_navbar():
@@ -115,13 +92,13 @@ def template_navbar():
 
 def template_cover_heading(head_title):
     return f"""
-    <h1 style="text-align:center; color:white; font-weight:bold; font-size:4.5vw; font:sans serif">{head_title}</h1>
+    <h1  class="like-a-actor" style="text-align:center; color:white; font-weight:bold; font-size:4.5vw; font:sans serif">{head_title}</h1>
     """
 
 
 def template_subheading(text: str, color: str='black', background_color: str=None, font_size: float=1):
     return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vh;border-radius:25px;">{text}</h2>
+    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vh;">{text}</h2>
     """
 
 
@@ -229,22 +206,6 @@ def template_album():
     """
 
 def footer_button(link):
-    # share link, google form link
-    url_default_ks = "https://story.kakao.com/share?url="
-    url_default_fb = "https://www.facebook.com/sharer/sharer.php?u="
-    url_default_tw_txt = "https://twitter.com/intent/tweet?text="
-    url_default_tw_url = "&url="
-    url_default_naver = "http://share.naver.com/web/shareView.nhn?url="
-    title_default_naver = "&title="
-    # url_this_page =  location.href
-    url_this_page = 'http://www.simactor.site:30001/'
-    # title_this_page = document.title
-    title_this_page = 'simactor'
-
-    url_combine_ks = url_default_ks + url_this_page
-    url_combine_fb = url_default_fb + url_this_page
-    url_combine_tw = url_default_tw_txt + title_this_page + url_default_tw_url + url_this_page
-    # url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page)
     return f"""
     <div class="btn-footer">
         <div>
