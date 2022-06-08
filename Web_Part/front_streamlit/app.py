@@ -14,6 +14,7 @@ from utils import convert_bytes_to_image
 
 from front_streamlit import external_components as ec
 import streamlit.components.v1 as components
+from frontend import component_zero
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -30,9 +31,16 @@ def new_file():
 def find_actor_btn_callback():
     st.session_state.find_actor_clicked = True
 
+def run_component(props):
+    value = component_zero(key='zero', **props)
+    return value
+def handle_event(value):
+    st.header('Streamlit')
+    st.write('Received from component: ', value)      
 
 #%% Main function
 def main():
+        
     global uploaded_file
     # Get css
     with open('./front_streamlit/bootstrap.css') as f:
@@ -107,6 +115,16 @@ def main():
         # Set columns to show uploaded image and classification result image
         _, col2, col3, _ = st.columns(4)
         _, sub_col2, sub_col3, _ = st.columns(4)
+
+        share_btn = st.button('공유하기!!!!!!!!!!!!!!!!!!!!!!!!')
+        if 'counter' not in st.session_state:
+            st.session_state.counter = 0
+        st.session_state.counter = st.session_state.counter + 1
+        props = {
+            'counter': share_btn,
+        }
+        # handle_event(run_component(props)) 
+        run_component(props) 
 
         # If get user image
         if uploaded_file and not st.session_state.refresh:
