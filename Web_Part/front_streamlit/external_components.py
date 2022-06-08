@@ -1,25 +1,15 @@
 import streamlit as st
 from urllib import parse
 
-# def set_bg_hack_url(url):
-#     '''
-#     A function to unpack an image from url and set as bg.
-#     Returns
-#     -------
-#     The background.
-#     '''
-        
-#     st.markdown(
-#          f"""
-#          <style>
-#          .stApp {{
-#              background: url("{url}");
-#              background-size: cover
-#          }}
-#          </style>
-#          """,
-#          unsafe_allow_html=True
-#      )
+def set_bg_hack_url():
+    st.markdown(
+         f"""
+         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+        </style>
+         """,
+         unsafe_allow_html=True
+     )
 
     
 def bootstrap_block_level_button(text):
@@ -43,16 +33,24 @@ def bootstrap_card():
 
 
 def bootstrap_intro(texts: list):
-    text_tag = ''
-    for text in texts:
-        text_tag += f"""
-        <div class="home-intro" role="alert">
-        {text}
-        </div>
-        """
     return f"""
         <div class="home-intro-div">
-            {text_tag}
+            <div class="home-intro-wrapper">
+                <span class="home-intro">
+                    {texts[0]}
+                </span>
+                <span class="home-intro">
+                    {texts[1]}
+                </span>
+            </div>
+            <div class="home-intro-wrapper">
+                <span class="home-intro">
+                    {texts[2]}
+                </span>
+                <span class="home-intro">
+                    {texts[3]}
+                </span>
+            </div>
         </div>
         """
 
@@ -92,13 +90,18 @@ def template_navbar():
 
 def template_cover_heading(head_title):
     return f"""
-    <h1  class="like-a-actor" style="text-align:center; color:white; font-weight:bold; font-size:4.5vw; font:sans serif">{head_title}</h1>
+    <h1  class="like-a-actor" style="text-align:center; color:white; font-weight:bold; font:sans serif">{head_title}</h1>
     """
 
 
-def template_subheading(text: str, color: str='black', background_color: str=None, font_size: float=1):
+def template_subheading(text: str, color: str='black', background_color: str=None):
     return f"""
-    <h2 style="text-align:center; color:{color}; background-color:{background_color}; font-size:{str(font_size)}vh;">{text}</h2>
+    <h2 class="template-subheading" style="text-align:center; color:{color}; background-color:{background_color}; ">{text}</h2>
+    """
+
+def photo_subheading(text: str, color: str='black', background_color: str=None):
+    return f"""
+    <h2 class="template-subheading photo-heading" style="text-align:center; color:{color}; background-color:{background_color}; ">{text}</h2>
     """
 
 
@@ -208,8 +211,10 @@ def template_album():
 def footer_button(link):
     return f"""
     <div class="btn-footer">
-        <div>
-            <a class="google-form-button" href="{link}">설문지 작성</a>
-        </div>
+        <a class="google-form-button" href="{link}">
+        <span class="google-form-button-text">
+        설문지 작성
+        </span>
+        </a>
     </div>
     """

@@ -34,13 +34,14 @@ def find_actor_btn_callback():
 def run_component(props):
     value = component_zero(key='zero', **props)
     return value
+
 def handle_event(value):
     st.header('Streamlit')
     st.write('Received from component: ', value)      
 
 #%% Main function
 def main():
-        
+    
     global uploaded_file
     # Get css
     with open('./front_streamlit/bootstrap.css') as f:
@@ -49,12 +50,12 @@ def main():
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
     # Apply backgroung image
-    # ec.set_bg_hack_url('https://storage.googleapis.com/bitcoin_images_storage/desktop.png')
+    ec.set_bg_hack_url()
 
 
     # load script
     
-
+    
     # Navigation bar and page title
     # st.markdown(ec.template_navbar(), unsafe_allow_html=True)
     st.markdown(ec.template_cover_heading('LIKE A STAR'), unsafe_allow_html=True)
@@ -99,11 +100,12 @@ def main():
 
     # Show input guideline message
     if not st.session_state['router']:
+        
         _, sub_main_col, _ = st.columns([5, 2, 5])
         _, main_col2, _ = st.columns([3, 6, 3])
         with main_col2:
             input_guide = st.empty()
-            input_guide.markdown(ec.bootstrap_intro(["60여 편의 드라마 작품 중에서 닮은 배우를 찾아드립니다.","멍충~멍충~"]), unsafe_allow_html=True)
+            input_guide.markdown(ec.bootstrap_intro(["AI 메이크업 아티스트가","60여 편의 드라마 작품에서","가장 닮은 배우를 찾은 뒤","메이크업까지 무료로 해드립니다!"]), unsafe_allow_html=True)
             holder = st.empty()
             uploaded_file = holder.file_uploader("", type=["jpg", "jpeg", "png"], on_change=new_file)    
         with sub_main_col:
@@ -115,17 +117,8 @@ def main():
         # Set columns to show uploaded image and classification result image
         _, col2, col3, _ = st.columns(4)
         _, sub_col2, sub_col3, _ = st.columns(4)
-
-        share_btn = st.button('공유하기!!!!!!!!!!!!!!!!!!!!!!!!')
-        if 'counter' not in st.session_state:
-            st.session_state.counter = 0
-        st.session_state.counter = st.session_state.counter + 1
-        props = {
-            'counter': share_btn,
-        }
-        # handle_event(run_component(props)) 
-        run_component(props) 
-
+        
+        
         # If get user image
         if uploaded_file and not st.session_state.refresh:
             st.session_state.files = uploaded_file
@@ -147,7 +140,7 @@ def main():
                     imgByteArr = io.BytesIO() # <class '_io.BytesIO'>
                     image.save(imgByteArr, format="jpeg") # PIL 이미지를 binary형태의 이름으로 저장
                     image_bytes = imgByteArr.getvalue() # <class 'bytes'>
-
+            
             files = [
                 ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
                 ]
@@ -175,7 +168,7 @@ def main():
                 st.session_state.image_list_1 = image_list_1
                 if st.session_state.uploaded_file:
                     with col2:
-                        st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 2.5), unsafe_allow_html=True)
+                        st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1'), unsafe_allow_html=True)
                         user_img_field = st.empty()
                         user_img_field.image(image, use_column_width=True)
                         holder.empty()
@@ -233,7 +226,7 @@ def main():
                             # Show similar actor image
                             st.markdown(ec.template_subheading(
                                 f'{st.session_state.sim_actor_nm}님과 {st.session_state.sim_percent*100:.1f}% 유사합니다!',
-                                'black', '#D5DBDB', 2.5),
+                                'black', '#D5DBDB'),
                                     unsafe_allow_html=True)
                             st.image(st.session_state.classification_img, use_column_width=True)
                             logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
@@ -250,7 +243,7 @@ def main():
                         # Show similar actor image
                         st.markdown(ec.template_subheading(
                             f'{st.session_state.sim_actor_nm}님과 {st.session_state.sim_percent*100:.1f}% 유사합니다!',
-                            'black', '#D5DBDB', 2.5),
+                            'black', '#D5DBDB'),
                                                             unsafe_allow_html=True)
                         st.image(st.session_state.classification_img, use_column_width=True)
                         logger.info(f"Total Inference Time : {time.time() - st.session_state.cls_start_time}")
@@ -281,25 +274,39 @@ def main():
         _, beautyGAN_btn_col, _  = st.columns([1, 3, 1])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
-            st.markdown(ec.template_subheading('당신의 얼굴', 'white', '', 2), unsafe_allow_html=True)
+            st.markdown(ec.photo_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
         with col3:
             st.image(st.session_state.beautyGAN_img_list[0], use_column_width=True)
-            st.markdown(ec.template_subheading('배우 메이크업 적용', 'white', '', 2), unsafe_allow_html=True)
+            st.markdown(ec.photo_subheading('배우 메이크업 적용', 'white', ''), unsafe_allow_html=True)
         with col4:
             st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
-            st.markdown(ec.template_subheading('배우의 얼굴', 'white', '', 2), unsafe_allow_html=True)
+            st.markdown(ec.photo_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
         with beautyGAN_btn_col:
             refresh_btn = st.button('처음부터 다시하기')
+            
+            
+            # handle_event(run_component(props)) 
+            
             if refresh_btn:
                 st.session_state = reset(st.session_state)
                 st.session_state.router = False
                 st.experimental_rerun()
-        link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
-        st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+            link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+            share_link = 'https://storage.googleapis.com/bitcoin_images_storage/kakao.png'
+            st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+            share_btn = st.button('공유하기')
+            if 'counter' not in st.session_state:
+                st.session_state.counter = 0
+            st.session_state.counter = st.session_state.counter + 1
+            props = {
+                'counter': share_btn,
+            }
+            run_component(props) 
+
+
     else:
         init_session_state()
     
-
                     
 
 #%% Main part
@@ -310,6 +317,7 @@ st.set_page_config(
     )
 
 
+
 if __name__=='__main__':
     main()
-
+    

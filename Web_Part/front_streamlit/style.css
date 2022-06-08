@@ -1,4 +1,8 @@
 /* ######################### */
+.css-10trblm, .css-160hik1, .google-form-button, .home-intro, .home-intro-wrapper, .template-subheading{
+    font-family: 'Do Hyeon', sans-serif;
+
+}
 .stApp {
     background: url("https://storage.googleapis.com/bitcoin_images_storage/Desktop_40.png");
     background-size: cover
@@ -21,14 +25,23 @@
     rgba(0,0,0, 0.3) 100%);
 }
 .google-form-button{
-color: white !important;
-display: block;
-text-align: center;
-font-size: 1.8vh;
-width: 18vh;
-padding: 1vh;
-margin: auto;
-border : 0.3vh white solid 
+    background-color: #616A6B;
+    border: 3px solid #000000;
+    color: white !important;
+    text-align: center;
+    height: auto;
+    width: 100%;
+    font-size: 2.5vh;
+    margin: auto;
+    display: block;
+    border-radius: 3vh;
+    line-height: normal;
+/* 
+    
+    font-size: 1.8vh;
+    width: 18vh;
+    padding: 1vh;
+    border : 0.3vh white solid  */
 }
 .google-form-button:link{
 text-decoration: none;
@@ -39,8 +52,8 @@ text-decoration: none;
 .btn-footer {
 display: block;
 text-align: center;
-vertical-align: middle;
 padding-top: 9vh;
+margin-bottom: 4vh
 }
 
 h1.like-a-actor {
@@ -64,29 +77,41 @@ animation: flux 2s linear infinite;
 -webkit-animation: flux 2s linear infinite;
 -o-animation: flux 2s linear infinite;
 }
+.home-intro-wrapper{
+    text-align: center;
+    margin-bottom: 2vh;
+}
 .home-intro-div{
     margin-top: 3vh;
 }
 .home-intro{
     color: white;
-    font-size: 2vh ;
-    font-family: verdana;
+    font-size: 2.5vh ;
     text-align: center;
     margin-bottom: 1rem;
 }
 .css-1l269bu{
     display: none;
 }
+.template-subheading{
+    font-size: 2vw;
+}
 
+.st-ae{
+    opacity: 0.7;
+    color: rgb(155, 117, 13);
+    background-color: rgba(254, 231, 168, 1);
+    border-color:rgba(254, 203, 62, 1);
+}
 /* button style */
 div.stButton > button:first-child {
     background-color: #616A6B;
+    border-radius: 3vh;
     color: white;
     height: auto;
     width: 100%;
     border:3px solid #000000;
     font-size:2.5vh;
-    font-weight: bold;
     margin: auto;
     display: block;
 }
@@ -101,7 +126,13 @@ div.stButton > button:active {
     top:0px;
 }
 .css-160hik1{
-    border-radius: 25px;
+    border-radius: 3vh;
+}
+.google-form-button-text{
+    height: 5vh;
+    display: block;
+    line-height: normal;
+    padding: 6px 0 8px 0;
 }
 @keyframes like-a-actor {
 0%,
@@ -114,8 +145,62 @@ div.stButton > button:active {
     color: #146C80;
 }
 }
-  
-  
+
+@media (max-width: 767px){
+	h1.like-a-actor{
+        font-size: 12vw;
+        margin-bottom: 2vw;
+    }
+    .home-intro-wrapper{
+        text-align: center;
+        margin-bottom: 0;
+    }
+    .home-intro{
+        margin-bottom: 0.3rem;
+        display: block;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size: 4.5vw;
+    }
+    /* 업로드한 이미지 */
+    .css-10trblm, .css-160hik1{
+        font-family: 'Do Hyeon', sans-serif;
+    }
+    div.stButton > button:first-child{
+        margin-bottom: 8vw;
+    }
+    h2.template-subheading{
+        font-size: 7vw;
+    }
+    .template-subheading{
+    font-size: 7vw;
+}
+    .photo-heading{
+        padding: 1vw 0vw 11vw 0vw;
+    }
+    .google-form-button{
+        margin-bottom: 2vw;
+        width: 40vw;
+        height: 12vw;
+    }
+    .google-form-button-text{
+        display: block;
+        width: 40vw;
+        height: 12vw;
+        line-height: 12vw;
+    }
+}
+
+/* @media (min-width: 768px) and (max-width: 991px) {
+    // 테블릿 세로
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    // 테블릿 가로
+} */
+
+/* @media (min-width: 1200px) {
+    // 데스크탑 일반
+} */
   
   
   /* ####################### */
