@@ -310,10 +310,13 @@ def main():
                 st.session_state = reset(st.session_state)
                 st.session_state.router = False
                 st.experimental_rerun()
-
+        with test:
+            link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+            st.markdown(ec.footer_button(link), unsafe_allow_html=True)
     else:
         init_session_state()
     
+    st.markdown(ec.footer(), unsafe_allow_html=True)
                     
 
 #%% Main part

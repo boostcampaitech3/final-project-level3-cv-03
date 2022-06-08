@@ -240,3 +240,12 @@ def footer_button(link):
         </a>
     </div>
     """
+def footer():
+    return """
+    <footer class="bittcoin-footer">
+        <span class="bittcoin-footer-p">2022 Naver AI Boostcamp 3rd-CV-03 made by BittCoin
+        </span>
+        <span class="bittcoin-footer-p">(강면구, 김대근, 박선혁, 정재욱, 한현진)
+        </span>
+    </footer>
+    """
