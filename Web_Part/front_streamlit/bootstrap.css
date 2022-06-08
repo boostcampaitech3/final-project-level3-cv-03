@@ -10243,37 +10243,7 @@ a.text-dark:hover, a.text-dark:focus {
 .masthead-brand{
   color: #fff;
 }
-/* ######################### */
-.block-container{
-  background: linear-gradient(to right, 
-  rgba(90, 59, 59, 0.2) 10%, 
-  rgba(0,0,0, 0.3) 20%, 
-  rgba(0,0,0, 0.4) 30%, 
-  rgba(0,0,0, 0.5) 40%, 
-  rgba(0,0,0, 0.5) 50%, 
-  rgba(0,0,0, 0.5) 60%, 
-  rgba(0,0,0, 0.4) 70%, 
-  rgba(0,0,0, 0.3) 80% , 
-  rgba(0,0,0, 0.2) 90% , 
-  rgba(0,0,0, 0.1) 100%);
-}
-.google-form-button{
-  color: black !important;
-  display: block;
-  text-align: center;
-  font-size: 1.8vh;
-  width: 18vh;
-  padding: 1vh;
-  margin: auto;
-  border : 0.3vh black solid 
-}
-.google-form-button:link{
-  text-decoration: none;
-} 
-.google-form-button:visited{
-  text-decoration: none;
-} 
-/* ####################### */
+
 @media print {
   *,
   *::before,
