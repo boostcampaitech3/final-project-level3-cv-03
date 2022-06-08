@@ -128,27 +128,49 @@
     }
     // Access values sent from Streamlit!
     function dataUpdate_Handler(props) {
-        // msgLabel.innerText = `Update [${props.counter}] at ${props.datetime}`
+      // msgLabel.innerText = `Update [${props.counter}] at ${props.datetime}`
 
 
-        // 이부분에서 템플릿 수정해주시면 됩니다!!!!
-        link_kakao()
-        function link_kakao() {
-            var sh_title = "공유할 제목";
-            var sh_desc = "상세설명";
-            Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: sh_title,
-                    description: sh_desc,
-                    imageUrl: "대표 이미지 ( 예 : 로고, 썸네일 등등 )",
-                    link: {
-                        mobileWebUrl: "'http://49.50.164.49:30002/",
-                        webUrl: "'http://49.50.164.49:30002/"
-                    }
-                },
-            });
-        }
+      // 이부분에서 템플릿 수정해주시면 됩니다!!!!
+      link_kakao()
+      function link_kakao() {
+        var sh_title = "배우(되)고 싶니?";
+        var sh_desc = "초특급 울트라 하이퍼 AI를 사용한 닮은 배우 찾기! 안 해보고는 못 배길걸?";
+        var address = "http://www.simactor.site:30001/"
+        var thumbnail_address = "https://storage.googleapis.com/bitcoin_images_storage/share_thumbnail_image_3.png"
+
+        Kakao.Link.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: sh_title,
+            description: sh_desc,
+            imageUrl: thumbnail_address,
+            link: {
+              mobileWebUrl: address,
+              webUrl: address,
+            },
+          },
+          buttons: [
+            {
+              title: '😉체험해보기',
+              link: {
+                mobileWebUrl: address,
+                webUrl: address,
+              },
+            },
+          ],
+        })
+        // Kakao.Link.sendCustom({
+        //   templateId: 77894,
+        //   templateArgs: {
+        //     title:
+        //       '판교 맛집에 들르다. 다양하고 풍부한 퓨전 한정식. 깔끔한 내부 인테리어 라이언',
+        //     description:
+        //       '부담없는 가격에 푸짐하게 즐기는 점심메뉴 런치한정식, 불고기정식, 돼지 김치찌개 등',
+        //   },
+        // })
+
+      }
     }
     // Simply log received data dictionary
     function log_Handler(props) {
