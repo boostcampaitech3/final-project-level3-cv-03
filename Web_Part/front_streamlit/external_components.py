@@ -204,6 +204,28 @@ def template_album():
             </div>
         </div>
     """
+# def apply_kakaotalk_button():
+#     st.markdown("""
+#     <style>
+#     div.stButton > button:first-child {
+#         background: url('https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png') no-repeat;
+#         height: 4.5em;
+#         width: 4.5em;
+#         border-radius:10px;
+#         border:0px solid #000000;
+#         margin: auto;
+#         display: block;
+#     }
+#     div.stButton > button:hover {
+#         background:linear-gradient(to bottom, #ce1126 5%, #ff5a5a 100%);
+#         background-color:#ce1126;
+#     }
+#     div.stButton > button:active {
+#         position:relative;
+#         top:3px;
+#     }
+#     </style>""", unsafe_allow_html=True)
+
 
 def footer_button(link):
     return f"""
