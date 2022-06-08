@@ -225,34 +225,9 @@ def footer_button(link):
     url_combine_tw = url_default_tw_txt + title_this_page + url_default_tw_url + url_this_page
     # url_combine_naver = url_default_naver + encodeURI(url_this_page) + title_default_naver + encodeURI(title_this_page)
     return f"""
-    <div class="footer">
-        <div class="share-button">
-            <div style="width: 100%; text-align: center; margin-bottom: 64px;"> 
-                <!-- Facebook share button --> 
-                <a href="" onclick="window.open({url_combine_fb}, '', 'scrollbars=no, width=600, height=600'); return false;">
-                <img src="https://imgur.com/2pxqHxt.png" title="페이스북으로 공유하기" class="sharebtn_custom" style="width: 48px;"></a> 
-                <!-- Twitter share button --> 
-                <a href="" onclick="window.open({url_combine_tw}, '', 'scrollbars=no, width=600, height=600'); return false;">
-                <img src="https://imgur.com/z7V4qga.png" title="트위터로 공유하기" class="sharebtn_custom" style="width: 48px;"></a>  
-                <!-- Kakao story share button --> 
-                <a href="" onclick="window.open({url_combine_ks}, '', 'scrollbars=no, width=600, height=600'); return false;">
-                <img src="https://imgur.com/mIW39pd.jpg" title="카카오스토리로 공유하기" class="sharebtn_custom" style="width: 48px;"></a>
-            </div>
-        </div>
-        <div class="google-form-button">
-            <a href="{link}">설문지 작성</a>
+    <div class="btn-footer">
+        <div>
+            <a class="google-form-button" href="{link}">설문지 작성</a>
         </div>
     </div>
     """
-def test():
-    return """
-    <div style="width:100%;border:0;padding:0;">
-        <a id="kakao-link-btn" href="javascript:kt2('9');"><button id="katalk2" class="btn btn-warning" type="button" style="width:100%;height: 66px;border-radius:0px;background-color:#d5d5d5;border:0;border-bottom-left-radius:7px;border-bottom-right-radius:7px;"><span style="font-size:1.1em"><font color="#000"><span style="font-size:1em;font-weight:bold;letter-spacing:-1px;"><i class="fas fa-comment fa-flip-horizontal" aria-hidden="true"></i> 니온 얼굴인식 카톡으로 공유하기</span><br><span style="font-size:0.85em;font-weight:normal;letter-spacing:-1px;">나에게 보내놓고 쓰거나, 친구에게 이 기능 알려주기</span></font></span></button></a>
-	</div>
-    """
-def script():
-    st.markdown("""
-    <script type="text/javascript">
-        console.log("Hello World!");
-    </script>
-    """, unsafe_allow_html=True)
