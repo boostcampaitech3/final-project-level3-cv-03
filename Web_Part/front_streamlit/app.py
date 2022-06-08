@@ -112,6 +112,23 @@ def main():
             st.session_state.files = uploaded_file
             st.session_state.uploaded_file = True
             image_bytes = uploaded_file.getvalue()
+            image = Image.open(io.BytesIO(image_bytes))
+            image_exif = image.getexif()
+            if image_exif:
+                exif = dict(image_exif.items())
+                if exif.get(274) == 1:
+                    pass
+                else:   
+                    if exif.get(274) == 3:
+                        image = image.rotate(180, expand=True)
+                    elif exif.get(274) == 6:
+                        image = image.rotate(270, expand=True)
+                    elif exif.get(274) == 8:
+                        image = image.rotate(90, expand=True)
+                    imgByteArr = io.BytesIO() # <class '_io.BytesIO'>
+                    image.save(imgByteArr, format="jpeg") # PIL 이미지를 binary형태의 이름으로 저장
+                    image_bytes = imgByteArr.getvalue() # <class 'bytes'>
+
             files = [
                 ('files',(uploaded_file.name, image_bytes, uploaded_file.type))
                 ]
@@ -141,7 +158,7 @@ def main():
                     with col2:
                         st.markdown(ec.template_subheading('업로드한 이미지', 'black', '#AED6F1', 1.5), unsafe_allow_html=True)
                         user_img_field = st.empty()
-                        user_img_field.image(uploaded_file, use_column_width=True)
+                        user_img_field.image(image, use_column_width=True)
                         holder.empty()
                         input_guide.empty()
                         smp_img_panel.empty()
