@@ -25,23 +25,20 @@
     rgba(0,0,0, 0.3) 100%);
 }
 .google-form-button{
-    background-color: #616A6B;
+    background-color: #95D3FD;
     border: 3px solid #000000;
     color: white !important;
     text-align: center;
     height: auto;
-    width: 100%;
+    width: 21vw;
     font-size: 2.5vh;
     margin: auto;
     display: block;
     border-radius: 3vh;
     line-height: normal;
-/* 
-    
-    font-size: 1.8vh;
-    width: 18vh;
-    padding: 1vh;
-    border : 0.3vh white solid  */
+}
+.google-form-button:hover{
+    background-color: #034F83;
 }
 .google-form-button:link{
 text-decoration: none;
@@ -52,7 +49,7 @@ text-decoration: none;
 .btn-footer {
 display: block;
 text-align: center;
-padding-top: 9vh;
+/* padding-top: 9vh; */
 margin-bottom: 4vh
 }
 
@@ -109,7 +106,8 @@ div.stButton > button:first-child {
     border-radius: 3vh;
     color: white;
     height: auto;
-    width: 100%;
+    width: 21vw;
+    /* width: 100%; */
     border:3px solid #000000;
     font-size:2.5vh;
     margin: auto;
@@ -133,6 +131,9 @@ div.stButton > button:active {
     display: block;
     line-height: normal;
     padding: 6px 0 8px 0;
+}
+.css-1bzkvni.e1tzin5v2 {
+    margin-top: 8vh;
 }
 @keyframes like-a-actor {
 0%,
@@ -166,30 +167,33 @@ div.stButton > button:active {
         font-family: 'Do Hyeon', sans-serif;
     }
     div.stButton > button:first-child{
-        margin-bottom: 8vw;
+        margin-bottom: 2vw;
+        width: 100%;
     }
     h2.template-subheading{
         font-size: 7vw;
     }
     .template-subheading{
     font-size: 7vw;
-}
+    }
     .photo-heading{
         padding: 1vw 0vw 11vw 0vw;
     }
     .google-form-button{
+        width: 100%;
+        display: block;
         margin-bottom: 2vw;
-        width: 40vw;
         height: 12vw;
     }
     .google-form-button-text{
         display: block;
-        width: 40vw;
+        width: 100%;
         height: 12vw;
-        line-height: 12vw;
+    }
+    .css-rncmk8.e1tzin5v0 {
+        margin-top: 0;
     }
 }
-
 /* @media (min-width: 768px) and (max-width: 991px) {
     // 테블릿 세로
 }

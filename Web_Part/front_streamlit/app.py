@@ -271,7 +271,7 @@ def main():
         # add_height(4)
         st.balloons()
         _, col2, col3, col4, _ = st.columns(5)
-        _, beautyGAN_btn_col, _  = st.columns([1, 3, 1])
+        _, beautyGAN_btn_col, test, _  = st.columns([2, 3,3, 2])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
             st.markdown(ec.photo_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
@@ -283,31 +283,32 @@ def main():
             st.markdown(ec.photo_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
         with beautyGAN_btn_col:
             refresh_btn = st.button('처음부터 다시하기')
-            
-            
-            # handle_event(run_component(props)) 
-            
             if refresh_btn:
                 st.session_state = reset(st.session_state)
                 st.session_state.router = False
                 st.experimental_rerun()
-                
-            markdown_string = "[![카카오톡 로고]("
-            icon_url = "https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-            connect = ")]("
-            share_link = "https://sharer.kakao.com/talk/friends/picker/easylink?app_key=228dd3487cef9cea56763dc2d68219c5&ka=sdk%2F1.42.0%20os%2Fjavascript%20sdk_type%2Fjavascript%20lang%2Fen-US%20device%2FWin32%20origin%2Fhttp%253A%252F%252F49.50.164.49%253A30001&validation_action=default&validation_params=%7B%22link_ver%22%3A%224.0%22%2C%22template_object%22%3A%7B%22object_type%22%3A%22feed%22%2C%22content%22%3A%7B%22title%22%3A%22%EB%B0%B0%EC%9A%B0(%EB%90%98)%EA%B3%A0%20%EC%8B%B6%EB%8B%88%3F%22%2C%22description%22%3A%22%EC%B4%88%ED%8A%B9%EA%B8%89%20%EC%9A%B8%ED%8A%B8%EB%9D%BC%20%ED%95%98%EC%9D%B4%ED%8D%BC%20AI%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%9C%20%EB%8B%AE%EC%9D%80%20%EB%B0%B0%EC%9A%B0%20%EC%B0%BE%EA%B8%B0!%20%EC%95%88%20%ED%95%B4%EB%B3%B4%EA%B3%A0%EB%8A%94%20%EB%AA%BB%20%EB%B0%B0%EA%B8%B8%EA%B1%B8%3F%22%2C%22image_url%22%3A%22https%3A%2F%2Fstorage.googleapis.com%2Fbitcoin_images_storage%2Fshare_thumbnail_image_3.png%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%2C%22web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%7D%7D%2C%22buttons%22%3A%5B%7B%22title%22%3A%22%F0%9F%98%89%EC%B2%B4%ED%97%98%ED%95%B4%EB%B3%B4%EA%B8%B0%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%2C%22web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%7D%7D%5D%7D%7D"
-            end = ")"
-            st.markdown(markdown_string + icon_url + connect + share_link + end)
+        with test:
+            link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+            st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+
+            
+
+            # markdown_string = "[![카카오톡 로고]("
+            # icon_url = "https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+            # connect = ")]("
+            # share_link = "https://sharer.kakao.com/talk/friends/picker/easylink?app_key=228dd3487cef9cea56763dc2d68219c5&ka=sdk%2F1.42.0%20os%2Fjavascript%20sdk_type%2Fjavascript%20lang%2Fen-US%20device%2FWin32%20origin%2Fhttp%253A%252F%252F49.50.164.49%253A30001&validation_action=default&validation_params=%7B%22link_ver%22%3A%224.0%22%2C%22template_object%22%3A%7B%22object_type%22%3A%22feed%22%2C%22content%22%3A%7B%22title%22%3A%22%EB%B0%B0%EC%9A%B0(%EB%90%98)%EA%B3%A0%20%EC%8B%B6%EB%8B%88%3F%22%2C%22description%22%3A%22%EC%B4%88%ED%8A%B9%EA%B8%89%20%EC%9A%B8%ED%8A%B8%EB%9D%BC%20%ED%95%98%EC%9D%B4%ED%8D%BC%20AI%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%9C%20%EB%8B%AE%EC%9D%80%20%EB%B0%B0%EC%9A%B0%20%EC%B0%BE%EA%B8%B0!%20%EC%95%88%20%ED%95%B4%EB%B3%B4%EA%B3%A0%EB%8A%94%20%EB%AA%BB%20%EB%B0%B0%EA%B8%B8%EA%B1%B8%3F%22%2C%22image_url%22%3A%22https%3A%2F%2Fstorage.googleapis.com%2Fbitcoin_images_storage%2Fshare_thumbnail_image_3.png%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%2C%22web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%7D%7D%2C%22buttons%22%3A%5B%7B%22title%22%3A%22%F0%9F%98%89%EC%B2%B4%ED%97%98%ED%95%B4%EB%B3%B4%EA%B8%B0%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%2C%22web_url%22%3A%22http%3A%2F%2Fwww.simactor.site%3A30001%2F%22%7D%7D%5D%7D%7D"
+            # end = ")"
+            # st.markdown(markdown_string + icon_url + connect + share_link + end)
             # share_btn = st.button('카카오톡으로 공유하기')
             # if share_btn:
             #     props = {
             #         'share': share_btn,
             #     }
-            #     run_component(props) 
+            #     run_component(props)
+            
 
 
-        link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
-        st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+       
     else:
         init_session_state()
     
