@@ -19,6 +19,7 @@ class InferenceResult(BaseModel):
     name: str
     ref_actor: Optional[str]
     percentage : float
+    url : str
 
     class Config:
         arbitrary_types_allowed = True
@@ -36,8 +37,8 @@ async def inference(files: List[UploadFile] = File(...), model=Depends(load_mode
     predicted, percentage = get_prediction(model=model, image_bytes=image_bytes)
     logger.info(f"Classification Inference : {time.time() - start:.5f}") # classification inference time
     
-    ref_actor, inference_result = ref_actor_image(predicted)
-    product = InferenceResult(name=inference_result,ref_actor = ref_actor, percentage=percentage)
+    ref_actor, inference_result, img_url = ref_actor_image(predicted)
+    product = InferenceResult(name=inference_result,ref_actor = ref_actor, percentage=percentage, url = img_url)
     
     return product
 

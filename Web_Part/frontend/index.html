@@ -130,7 +130,6 @@
     function dataUpdate_Handler(props) {
       // msgLabel.innerText = `Update [${props.counter}] at ${props.datetime}`
 
-
       // 이부분에서 템플릿 수정해주시면 됩니다!!!!
       link_kakao()
       function link_kakao() {
@@ -139,36 +138,39 @@
         var address = "http://www.simactor.site:30001/"
         var thumbnail_address = "https://storage.googleapis.com/bitcoin_images_storage/share_thumbnail_image_3.png"
 
-        Kakao.Link.sendDefault({
-          objectType: 'feed',
-          content: {
-            title: sh_title,
-            description: sh_desc,
-            imageUrl: thumbnail_address,
-            link: {
-              mobileWebUrl: address,
-              webUrl: address,
-            },
-          },
-          buttons: [
-            {
-              title: '😉체험해보기',
-              link: {
-                mobileWebUrl: address,
-                webUrl: address,
-              },
-            },
-          ],
-        })
-        // Kakao.Link.sendCustom({
-        //   templateId: 77894,
-        //   templateArgs: {
-        //     title:
-        //       '판교 맛집에 들르다. 다양하고 풍부한 퓨전 한정식. 깔끔한 내부 인테리어 라이언',
-        //     description:
-        //       '부담없는 가격에 푸짐하게 즐기는 점심메뉴 런치한정식, 불고기정식, 돼지 김치찌개 등',
+        // Kakao.Link.sendDefault({
+        //   objectType: 'feed',
+        //   content: {
+        //     title: sh_title,
+        //     description: sh_desc,
+        //     imageUrl: thumbnail_address,
+        //     link: {
+        //       mobileWebUrl: address,
+        //       webUrl: address,
+        //     },
         //   },
+        //   buttons: [
+        //     {
+        //       title: '😉체험해보기',
+        //       link: {
+        //         mobileWebUrl: address,
+        //         webUrl: address,
+        //       },
+        //     },
+        //   ],
         // })
+        Kakao.Link.sendCustom({
+          templateId: 77894,
+          templateArgs: {
+            THU:
+              props['url'],
+            PER:
+              props['percent'],
+            ACTOR:
+              props['actor'],
+            
+          },
+        })
 
       }
     }
