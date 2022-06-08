@@ -41,7 +41,7 @@ def main():
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
     # Apply backgroung image
-    ec.set_bg_hack_url('https://storage.googleapis.com/bitcoin_images_storage/desktop.png')
+    # ec.set_bg_hack_url('https://storage.googleapis.com/bitcoin_images_storage/desktop.png')
 
     # Apply custom streamlit button style
     ec.apply_custom_button_style()

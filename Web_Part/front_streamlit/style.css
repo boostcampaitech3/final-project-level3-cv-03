@@ -1,4 +1,9 @@
 /* ######################### */
+.stApp {
+    background: url("https://storage.googleapis.com/bitcoin_images_storage/Desktop.png");
+    background-size: cover
+}
+
 .block-container{
     background: linear-gradient(to right, 
     rgba(90, 59, 59, 0.2) 10%, 
