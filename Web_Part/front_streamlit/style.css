@@ -4,7 +4,7 @@
     background-size: cover
 }
 
-.block-container{
+.main{
     background: linear-gradient(to right, 
     rgba(90, 59, 59, 0.2) 10%, 
     rgba(0,0,0, 0.3) 20%, 
@@ -18,14 +18,14 @@
     rgba(0,0,0, 0.1) 100%);
   }
   .google-form-button{
-    color: black !important;
+    color: white !important;
     display: block;
     text-align: center;
     font-size: 1.8vh;
     width: 18vh;
     padding: 1vh;
     margin: auto;
-    border : 0.3vh black solid 
+    border : 0.3vh white solid 
   }
   .google-form-button:link{
     text-decoration: none;
