@@ -46,6 +46,7 @@ def main():
     # Get css
     with open('./front_streamlit/bootstrap.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        
     with open('./front_streamlit/style.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
