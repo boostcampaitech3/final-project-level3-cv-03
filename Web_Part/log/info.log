@@ -1,0 +1,97 @@
+{"asctime": "2022-06-07 06:52:53,045", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 2"}
+{"asctime": "2022-06-07 06:53:00,588", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.29893"}
+{"asctime": "2022-06-07 06:53:01,048", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 5.77198"}
+{"asctime": "2022-06-07 06:53:01,103", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \uc784\uc218\ud5a5 | Percent : 0.596"}
+{"asctime": "2022-06-07 06:53:01,127", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:15: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.\n"}
+{"asctime": "2022-06-07 06:53:01,128", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:16: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.\n"}
+{"asctime": "2022-06-07 06:53:01,155", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:17: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.\n"}
+{"asctime": "2022-06-07 06:53:01,161", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:19: The name tf.train.import_meta_graph is deprecated. Please use tf.compat.v1.train.import_meta_graph instead.\n"}
+{"asctime": "2022-06-07 06:53:03,010", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-07 06:53:04,331", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:23: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.\n"}
+{"asctime": "2022-06-07 06:53:05,232", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.83777"}
+{"asctime": "2022-06-07 06:53:05,292", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.17776"}
+{"asctime": "2022-06-07 06:53:05,359", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 10.083164691925049"}
+{"asctime": "2022-06-07 06:53:21,817", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 2"}
+{"asctime": "2022-06-07 06:53:24,907", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.56131"}
+{"asctime": "2022-06-07 06:53:25,043", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 1.33043"}
+{"asctime": "2022-06-07 06:53:25,100", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \uc784\uc218\ud5a5 | Percent : 0.596"}
+{"asctime": "2022-06-07 06:53:27,214", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-07 06:53:29,391", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.76266"}
+{"asctime": "2022-06-07 06:53:29,427", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.27241"}
+{"asctime": "2022-06-07 06:53:29,449", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 5.737225294113159"}
+<<<<<<< Updated upstream
+{"asctime": "2022-06-07 13:09:56,587", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+=======
+{"asctime": "2022-06-08 04:44:08,816", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:44:18,504", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.45296"}
+{"asctime": "2022-06-08 04:44:18,937", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 5.85962"}
+{"asctime": "2022-06-08 04:44:18,990", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.957"}
+{"asctime": "2022-06-08 04:44:19,022", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:15: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.\n"}
+{"asctime": "2022-06-08 04:44:19,022", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:16: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.\n"}
+{"asctime": "2022-06-08 04:44:19,046", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:17: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.\n"}
+{"asctime": "2022-06-08 04:44:19,050", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:19: The name tf.train.import_meta_graph is deprecated. Please use tf.compat.v1.train.import_meta_graph instead.\n"}
+{"asctime": "2022-06-08 04:44:20,805", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:44:22,004", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:23: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.\n"}
+{"asctime": "2022-06-08 04:44:22,267", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 9.189826965332031"}
+{"asctime": "2022-06-08 04:44:46,233", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 33.15533709526062"}
+{"asctime": "2022-06-08 04:45:11,785", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:45:25,689", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.19683"}
+{"asctime": "2022-06-08 04:45:25,825", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 0.88785"}
+{"asctime": "2022-06-08 04:45:25,835", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.957"}
+{"asctime": "2022-06-08 04:45:27,875", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:45:29,482", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 4.54434061050415"}
+{"asctime": "2022-06-08 04:45:42,810", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 17.872875213623047"}
+{"asctime": "2022-06-08 04:45:49,951", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:45:52,791", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.19726"}
+{"asctime": "2022-06-08 04:45:52,929", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 0.93332"}
+{"asctime": "2022-06-08 04:45:52,938", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.957"}
+{"asctime": "2022-06-08 04:45:54,968", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:45:56,669", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 4.67350959777832"}
+{"asctime": "2022-06-08 04:46:08,570", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 16.574472188949585"}
+{"asctime": "2022-06-08 04:46:15,437", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:46:19,643", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.20391"}
+{"asctime": "2022-06-08 04:46:19,790", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 0.93363"}
+{"asctime": "2022-06-08 04:46:19,799", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.957"}
+{"asctime": "2022-06-08 04:46:21,841", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:46:23,557", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 4.700531005859375"}
+>>>>>>> Stashed changes
+{"asctime": "2022-06-08 04:48:33,818", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:48:52,618", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.34970"}
+{"asctime": "2022-06-08 04:48:53,057", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 5.72247"}
+{"asctime": "2022-06-08 04:48:53,116", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.977"}
+{"asctime": "2022-06-08 04:48:53,187", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:15: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.\n"}
+{"asctime": "2022-06-08 04:48:53,188", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:16: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.\n"}
+{"asctime": "2022-06-08 04:48:53,210", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:17: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.\n"}
+{"asctime": "2022-06-08 04:48:53,214", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:19: The name tf.train.import_meta_graph is deprecated. Please use tf.compat.v1.train.import_meta_graph instead.\n"}
+{"asctime": "2022-06-08 04:48:54,989", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:48:56,293", "filename": "module_wrapper.py", "levelname": "WARNING", "name": "tensorflow", "log_message": "From /opt/ml/final_project/Web_Part/models/beautygan/beautygan_model.py:23: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.\n"}
+{"asctime": "2022-06-08 04:48:57,132", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.77876"}
+{"asctime": "2022-06-08 04:48:57,188", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.01413"}
+{"asctime": "2022-06-08 04:48:57,259", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 9.924235105514526"}
+{"asctime": "2022-06-08 04:48:58,353", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 11.018621921539307"}
+{"asctime": "2022-06-08 04:50:37,360", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:50:40,983", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.13234"}
+{"asctime": "2022-06-08 04:50:41,110", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 0.89049"}
+{"asctime": "2022-06-08 04:50:41,160", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.977"}
+{"asctime": "2022-06-08 04:50:43,179", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:50:45,221", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.72688"}
+{"asctime": "2022-06-08 04:50:45,277", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.06352"}
+{"asctime": "2022-06-08 04:50:45,303", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 5.084022521972656"}
+{"asctime": "2022-06-08 04:52:19,415", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 04:52:23,619", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.21855"}
+{"asctime": "2022-06-08 04:52:23,775", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 1.01866"}
+{"asctime": "2022-06-08 04:52:23,825", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.977"}
+{"asctime": "2022-06-08 04:52:25,884", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 04:52:28,078", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.72535"}
+{"asctime": "2022-06-08 04:52:28,131", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.24828"}
+{"asctime": "2022-06-08 04:52:28,149", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 5.392625331878662"}
+{"asctime": "2022-06-08 05:08:37,750", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 05:21:15,329", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Number of Faces : 1"}
+{"asctime": "2022-06-08 05:21:20,085", "filename": "face_classifier.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference : 0.20722"}
+{"asctime": "2022-06-08 05:21:20,295", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Classification Inference Total Time : 1.04532"}
+{"asctime": "2022-06-08 05:21:20,379", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Actor : \ud669\uc778\uc5fd | Percent : 0.977"}
+{"asctime": "2022-06-08 05:21:22,389", "filename": "saver.py", "levelname": "INFO", "name": "tensorflow", "log_message": "Restoring parameters from ./models/beautygan/weights/model"}
+{"asctime": "2022-06-08 05:21:24,427", "filename": "face_makeup.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference : 0.67905"}
+{"asctime": "2022-06-08 05:21:24,487", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "BeautyGAN Inference Total Time : 4.09691"}
+{"asctime": "2022-06-08 05:21:24,567", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 5.317905902862549"}
+{"asctime": "2022-06-08 05:21:26,442", "filename": "app.py", "levelname": "INFO", "name": "MLLogger", "log_message": "Total Inference Time : 7.192888021469116"}

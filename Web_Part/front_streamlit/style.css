@@ -1,0 +1,247 @@
+/* ######################### */
+.css-10trblm, .css-160hik1, .google-form-button, .home-intro, .home-intro-wrapper, .template-subheading, .edgvbvh1{
+    font-family: 'Do Hyeon', sans-serif;
+
+}
+.stApp {
+    background: url("https://storage.googleapis.com/bitcoin_images_storage/Desktop_40.png");
+    background-size: cover
+}
+.css-18e3th9{
+    padding: 0rem 1rem 2rem;
+}
+
+.main{
+    background: linear-gradient(to right, 
+    rgba(0, 0, 0, 0.3) 10%, 
+    rgba(0,0,0, 0.4) 20%, 
+    rgba(0,0,0, 0.5) 30%, 
+    rgba(0,0,0, 0.6) 40%, 
+    rgba(0,0,0, 0.6) 50%, 
+    rgba(0,0,0, 0.6) 60%, 
+    rgba(0,0,0, 0.6) 70%, 
+    rgba(0,0,0, 0.5) 80% , 
+    rgba(0,0,0, 0.4) 90% , 
+    rgba(0,0,0, 0.3) 100%);
+}
+.google-form-button{
+    background-color: #95D3FD;
+    border: 3px solid #000000;
+    color: white !important;
+    text-align: center;
+    height: auto;
+    width: 21vw;
+    font-size: 2.5vh;
+    margin: auto;
+    display: block;
+    border-radius: 3vh;
+    line-height: normal;
+}
+.google-form-button:hover{
+    background-color: #034F83;
+}
+.google-form-button:link{
+text-decoration: none;
+} 
+.google-form-button:visited{
+text-decoration: none;
+} 
+.btn-footer {
+display: block;
+text-align: center;
+/* padding-top: 9vh; */
+margin-bottom: 4vh
+}
+
+h1.like-a-actor {
+font-family: neon;
+color:white;
+font-size: 10vh;
+line-height: 9vw;
+text-shadow: 0 0 2vw yellow;
+}
+
+h1.like-a-actor {
+animation: neon 1s ease infinite;
+-moz-animation: neon 1s ease infinite;
+-webkit-animation: neon 1s ease infinite;
+}
+
+
+.like-a-actor {
+animation: flux 2s linear infinite;
+-moz-animation: flux 2s linear infinite;
+-webkit-animation: flux 2s linear infinite;
+-o-animation: flux 2s linear infinite;
+}
+.home-intro-wrapper{
+    text-align: center;
+    margin-bottom: 2vh;
+}
+.home-intro-div{
+    margin-top: 3vh;
+}
+.home-intro{
+    color: white;
+    font-size: 2.5vh ;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.css-1l269bu{
+    display: none;
+}
+.template-subheading{
+    font-size: 2vw;
+}
+
+.st-ae{
+    opacity: 0.7;
+    color: rgb(155, 117, 13);
+    background-color: rgba(254, 231, 168, 1);
+    border-color:rgba(254, 203, 62, 1);
+}
+/* button style */
+div.stButton > button:first-child {
+    background-color: #616A6B;
+    border-radius: 3vh;
+    color: white;
+    height: auto;
+    width: 21vw;
+    /* width: 100%; */
+    border:3px solid #000000;
+    font-size:2.5vh;
+    margin: auto;
+    display: block;
+}
+div.stButton > button:hover {
+    background:linear-gradient(to bottom, #D7DBDD 5%, #D7DBDD 100%);
+    background-color:#ABEBC6;
+    color: black;
+}
+div.stButton > button:active {
+    position:relative;
+    color: black;
+    top:0px;
+}
+.css-160hik1{
+    border-radius: 3vh;
+}
+.google-form-button-text{
+    height: 5vh;
+    display: block;
+    line-height: normal;
+    padding: 6px 0 8px 0;
+}
+.css-1bzkvni.e1tzin5v2 {
+    margin-top: 6vh;
+}
+
+
+footer.eknhn3m4{
+    visibility: hidden;
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    margin: 0 0 1vh 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+.bittcoin-footer-p{
+    
+    font-size: 0.2vw;
+    text-align: center;
+
+    width: 100%;
+    color: rgb(194, 194, 194);
+    margin: 0;
+}
+@keyframes like-a-actor {
+0%,
+100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+}
+50% {
+    text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
+    color: #146C80;
+}
+}
+
+@media (max-width: 767px){
+	h1.like-a-actor{
+        font-size: 12vw;
+        margin-bottom: 2vw;
+    }
+    .home-intro-wrapper{
+        text-align: center;
+        margin-bottom: 0;
+    }
+    .home-intro{
+        margin-bottom: 0.3rem;
+        display: block;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size: 4.5vw;
+    }
+    /* 업로드한 이미지 */
+    .css-10trblm, .css-160hik1{
+        font-family: 'Do Hyeon', sans-serif;
+    }
+    div.stButton > button:first-child{
+        margin-bottom: 2vw;
+        width: 100%;
+    }
+    h2.template-subheading{
+        font-size: 7vw;
+    }
+    .template-subheading{
+    font-size: 7vw;
+    }
+    .photo-heading{
+        padding: 1vw 0vw 11vw 0vw;
+    }
+    .google-form-button{
+        width: 100%;
+        display: block;
+        margin-bottom: 2vw;
+        height: 12vw;
+    }
+    .google-form-button-text{
+        display: block;
+        width: 100%;
+        height: 12vw;
+        line-height: 12vw;
+        padding: 0;
+    }
+    
+    .css-1bzkvni.e1tzin5v2 {
+        margin-top: 0;
+    }
+    .css-rncmk8 > div.css-1uifejx{
+        padding-left: 70vw;
+        margin-right: 0;
+        margin-bottom: 2vh;
+    }
+    .bittcoin-footer-p{
+        display: inline-block;
+    }
+    /* kakao, github */
+    /* .e1tzin5v1{
+    padding-left: 70vw;
+    } */
+}
+/* @media (min-width: 768px) and (max-width: 991px) {
+    // 테블릿 세로
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    // 테블릿 가로
+} */
+
+/* @media (min-width: 1200px) {
+    // 데스크탑 일반
+} */
+  
+  
+  /* ####################### */

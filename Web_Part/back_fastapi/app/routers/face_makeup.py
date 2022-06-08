@@ -33,8 +33,13 @@ async def make_transfer(
     start = time.time() # start time for checking inference time!
 
     # np.ndarray -> PIL 이미지 -> ASCII코드로 변환된 bytes 데이터(str)
-    transfer_result, transfer_refer = transfer(sess, graph, image_bytes, ref_bytes)
+    try:
+        transfer_result, transfer_refer = transfer(sess, graph, image_bytes, ref_bytes)
+    except: # BeautyGAN 적용 불가 이미지
+        product = {"result" : "Incorrect"}
+        return product
+        
     product = TransferImage(result=[transfer_result, transfer_refer])
-
+    
     logger.info(f"BeautyGAN Inference : {time.time() - start:.5f}") # beautygan inference time
     return product
