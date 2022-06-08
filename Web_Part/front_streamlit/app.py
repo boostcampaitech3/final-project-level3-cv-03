@@ -13,6 +13,7 @@ from utils import convert_bytes_to_image
 # import webbrowser, json
 
 from front_streamlit import external_components as ec
+import streamlit.components.v1 as components
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -42,6 +43,8 @@ def main():
 
     # Apply custom streamlit button style
     ec.apply_custom_button_style()
+    # load script
+    
 
     # Navigation bar and page title
     # st.markdown(ec.template_navbar(), unsafe_allow_html=True)
@@ -257,6 +260,8 @@ def main():
                 st.experimental_rerun()
     else:
         init_session_state()
+    link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
+    st.markdown(ec.footer_button(link), unsafe_allow_html=True)
 
                     
 
@@ -266,6 +271,7 @@ st.set_page_config(
     page_title='배우고 싶니?', 
     layout="wide",
     )
+
 
 if __name__=='__main__':
     main()
