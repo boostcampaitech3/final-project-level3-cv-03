@@ -1,30 +1,33 @@
 <style>
-    /* <!-- removed for brevity (see GitHub repo) -->  */
+  /* <!-- removed for brevity (see GitHub repo) -->  */
 </style>
 
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <title>Kakao JavaScript SDK</title>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script>
-        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('228dd3487cef9cea56763dc2d68219c5');
-        Kakao.isInitialized();  
-        // SDK 초기화 여부를 판단합니다.
-        console.log(Kakao.isInitialized());
-    </script>
-  </head>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Kakao JavaScript SDK</title>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('228dd3487cef9cea56763dc2d68219c5');
+    Kakao.isInitialized();
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+  </script>
+  <link href="style.css" rel="stylesheet">
+</head>
 
 <body>
-    <style>
-        .reportview-container {
-            background: url("https://storage.googleapis.com/bitcoin_images_storage/desktop.png")
-        }
-       .sidebar .sidebar-content {
-            background: url("https://storage.googleapis.com/bitcoin_images_storage/desktop.pngw")
-        }
-        </style>
+  <style>
+    .reportview-container {
+      background: url("https://storage.googleapis.com/bitcoin_images_storage/desktop.png")
+    }
+
+    .sidebar .sidebar-content {
+      background: url("https://storage.googleapis.com/bitcoin_images_storage/desktop.pngw")
+    }
+  </style>
 
   <!-- Set up your HTML here -->
   <!-- <h1>Component</h1> -->
@@ -63,7 +66,7 @@
         console.log("_sendMessage data: " + JSON.stringify(data))
         console.log("_sendMessage outData: " + JSON.stringify(outData))
       }
-      
+
       window.parent.postMessage(outData, "*")
     }
 
@@ -80,11 +83,11 @@
         }
       })
 
-      _sendMessage(COMPONENT_READY, {apiVersion: 1});
+      _sendMessage(COMPONENT_READY, { apiVersion: 1 });
 
       // Component should be mounted by Streamlit in an iframe, so try to autoset the iframe height.
       window.addEventListener("load", () => {
-        window.setTimeout(function() {
+        window.setTimeout(function () {
           setFrameHeight(document.documentElement.clientHeight)
         }, 0)
       })
@@ -95,7 +98,7 @@
     }
 
     function setFrameHeight(height) {
-      _sendMessage(SET_FRAME_HEIGHT, {height: height})
+      _sendMessage(SET_FRAME_HEIGHT, { height: height })
     }
 
     // The `data` argument can be any JSON-serializable value.
@@ -106,7 +109,7 @@
     // Now implement the the custom functionality of the component:
 
 
-    
+
     // let textInput = document.getElementById("text_input")
     // textInput.addEventListener("change", () => {
     //   sendData({
@@ -122,9 +125,9 @@
 
     // Set initial value sent from Streamlit!
     function initializeProps_Handler(props) {
-    //   if (textInput.value == "") {
-    //     textInput.value = props.initial_state.message
-    //   }
+      //   if (textInput.value == "") {
+      //     textInput.value = props.initial_state.message
+      //   }
     }
     // Access values sent from Streamlit!
     function dataUpdate_Handler(props) {
@@ -168,7 +171,7 @@
               props['percent'],
             ACTOR:
               props['actor'],
-            
+
           },
         })
 
@@ -185,4 +188,5 @@
     initialize(pipeline)
   </script>
 </body>
+
 </html>

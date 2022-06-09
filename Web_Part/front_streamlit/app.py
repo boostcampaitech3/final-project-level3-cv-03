@@ -15,6 +15,7 @@ from utils import convert_bytes_to_image
 from front_streamlit import external_components as ec
 import streamlit.components.v1 as components
 from frontend import component_zero
+from urllib import parse
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -46,6 +47,7 @@ def main():
     # Get css
     with open('./front_streamlit/bootstrap.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        
     with open('./front_streamlit/style.css') as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
@@ -290,7 +292,8 @@ def main():
         # add_height(4)
         st.balloons()
         _, col2, col3, col4, _ = st.columns(5)
-        _, beautyGAN_btn_col, test, test2, _  = st.columns([2, 3,3,3, 2])
+        _, beautyGAN_btn_col, share , _  = st.columns([3, 3, 3, 3])
+        _,  report , _ = st.columns([3, 6, 3])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
             st.markdown(ec.photo_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
@@ -300,25 +303,23 @@ def main():
         with col4:
             st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
             st.markdown(ec.photo_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
+
         with beautyGAN_btn_col:
-            share_btn = st.button('카카오톡으로 공유하기')
-            if share_btn:
-                props = {
-                    'actor': st.session_state.sim_actor_nm,
-                    'percent' : round(st.session_state.sim_percent * 100, 1),
-                    'url' : st.session_state.sim_actor_url,
-                }
-                run_component(props)
-            
-        with test:
             refresh_btn = st.button('처음부터 다시하기')
             if refresh_btn:
                 st.session_state = reset(st.session_state)
                 st.session_state.router = False
                 st.experimental_rerun()
-        with test2:
+        with share:
+            before = 'https://sharer.kakao.com/talk/friends/picker/easylink?app_key=228dd3487cef9cea56763dc2d68219c5&ka=sdk%2F1.42.0%20os%2Fjavascript%20sdk_type%2Fjavascript%20lang%2Fen-US%20device%2FWin32%20origin%2Fhttp%253A%252F%252F49.50.164.49%253A30001&validation_action=custom&validation_params=%7B%22link_ver%22%3A%224.0%22%2C%22template_id%22%3A77894%2C%22template_args%22%3A%7B%22THU%22%3A%22'
+            stringjson = st.session_state.sim_actor_url + '","PER":' + str(round(st.session_state.sim_percent * 100, 1)) + ',"ACTOR":"' + st.session_state.sim_actor_nm + '"}}'
+            url_json = parse.quote(stringjson)
+            share_link = before + url_json
+
+            st.markdown(ec.footer_button(share_link, '카카오톡 공유하기',['kakao-share-button','kakao-share-button-text']), unsafe_allow_html=True)
+        with report:
             link = 'https://docs.google.com/forms/d/e/1FAIpQLSf2yrMEZM6GQiul69EDGQ5OPKK6ELDGFdZfu7cYEcsWelw4eQ/viewform?usp=sf_link'
-            st.markdown(ec.footer_button(link), unsafe_allow_html=True)
+            st.markdown(ec.footer_button(link, '설문지 작성', ['google-form-button','google-form-button-text']), unsafe_allow_html=True)
     else:
         init_session_state()
     

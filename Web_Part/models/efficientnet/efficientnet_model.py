@@ -123,52 +123,56 @@ def transform_image(image_bytes: bytes) -> torch.Tensor:
 
 
 def convert_image(image_bytes: bytes):
-    img = from_bytes_to_numpy(image_bytes)
-    boxes_raw = app.get(img)
-    if len(boxes_raw) == 0:
+    try:
+            
+        img = from_bytes_to_numpy(image_bytes)
+        boxes_raw = app.get(img)
+        if len(boxes_raw) == 0:
 
-        return len(boxes_raw), ''
+            return len(boxes_raw), ''
 
-    elif len(boxes_raw) >= 1:
-        max_area = 0
-        max_index = -1
-        for index, box in enumerate(boxes_raw):
-            bbox = box['bbox']
-            if max_area < (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]):
-                max_area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1])
-                max_index = index
-        boxes = boxes_raw[max_index]
+        elif len(boxes_raw) >= 1:
+            max_area = 0
+            max_index = -1
+            for index, box in enumerate(boxes_raw):
+                bbox = box['bbox']
+                if max_area < (bbox[2]-bbox[0]) * (bbox[3]-bbox[1]):
+                    max_area = (bbox[2]-bbox[0]) * (bbox[3]-bbox[1])
+                    max_index = index
+            boxes = boxes_raw[max_index]
 
-        img, image_box, flag = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
-        if flag is True: ##이미지 모서리에 공백이 있는 경우 
-            w = image_box[3] -image_box[2]
-            h = image_box[1] -image_box[0]
-            diff = math.floor(abs(w-h) / 2)
-            output = None
-            if w > h:
-                if (w-h) % 2 ==1:
-                    output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]-1]
+            img, image_box, flag = norm_crop(img = img, landmark = boxes['kps'], image_size = CROPPED_IMG_SIZE, mode = 'NOMODE!') ## mode = 'arcface'
+            if flag is True: ##이미지 모서리에 공백이 있는 경우 
+                w = image_box[3] -image_box[2]
+                h = image_box[1] -image_box[0]
+                diff = math.floor(abs(w-h) / 2)
+                output = None
+                if w > h:
+                    if (w-h) % 2 ==1:
+                        output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]-1]
+                    else:
+                        output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]]
+                elif w < h:
+                    if (w-h) % 2 ==1:
+                        output = img[image_box[0] : image_box[1]-1, image_box[2]-diff : image_box[3]+diff]
+                    else:
+                        output = img[image_box[0] : image_box[1],   image_box[2]-diff : image_box[3]+diff]
                 else:
-                    output = img[image_box[0]-diff : image_box[1]+diff, image_box[2] : image_box[3]]
-            elif w < h:
-                if (w-h) % 2 ==1:
-                    output = img[image_box[0] : image_box[1]-1, image_box[2]-diff : image_box[3]+diff]
-                else:
-                    output = img[image_box[0] : image_box[1],   image_box[2]-diff : image_box[3]+diff]
+                    output = img[image_box[0] : image_box[1], image_box[2] : image_box[3]]
+            
+                if output.shape[0] < 380:
+                    img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_LINEAR)
+                else: 
+                    img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_AREA)
             else:
-                output = img[image_box[0] : image_box[1], image_box[2] : image_box[3]]
-        
-            if output.shape[0] < 380:
-                img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_LINEAR)
-            else: 
-                img = cv2.resize(output, dsize=(380, 380),interpolation = cv2.INTER_AREA)
-        else:
-            img = cv2.resize(img, dsize=(380, 380), interpolation=cv2.INTER_AREA)
-        img = img.astype(np.uint8)
-        pil_image = Image.fromarray(img)
-        output_img_bytes = from_image_to_bytes(pil_image)
+                img = cv2.resize(img, dsize=(380, 380), interpolation=cv2.INTER_AREA)
+            img = img.astype(np.uint8)
+            pil_image = Image.fromarray(img)
+            output_img_bytes = from_image_to_bytes(pil_image)
 
-        return len(boxes_raw), output_img_bytes
-    else:
-        print("###############HEy!!!!!!")
-        return "anything"
+            return len(boxes_raw), output_img_bytes
+        else:
+            ## 이러면 안되는거아닌가##
+            return 0, ''
+    except:
+        return 0, ''
