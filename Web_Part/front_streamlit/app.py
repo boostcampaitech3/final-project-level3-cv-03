@@ -15,6 +15,7 @@ from utils import convert_bytes_to_image
 from front_streamlit import external_components as ec
 import streamlit.components.v1 as components
 from frontend import component_zero
+from urllib import parse
 
 #%% Custom functions
 def uploaded_file_change_callback():
@@ -291,7 +292,7 @@ def main():
         # add_height(4)
         st.balloons()
         _, col2, col3, col4, _ = st.columns(5)
-        _, beautyGAN_btn_col, test, test2, _  = st.columns([2, 3,3,3, 2])
+        _, beautyGAN_btn_col, test, test2, _  = st.columns([3, 2,3,3, 2])
         with col2:
             st.image(st.session_state.image_list_1[0], use_column_width=True) ############
             st.markdown(ec.photo_subheading('당신의 얼굴', 'white', ''), unsafe_allow_html=True)
@@ -302,14 +303,16 @@ def main():
             st.image(st.session_state.beautyGAN_img_list[1], use_column_width=True)
             st.markdown(ec.photo_subheading('배우의 얼굴', 'white', ''), unsafe_allow_html=True)
         with beautyGAN_btn_col:
-            share_btn = st.button('카카오톡으로 공유하기')
-            if share_btn:
-                props = {
-                    'actor': st.session_state.sim_actor_nm,
-                    'percent' : round(st.session_state.sim_percent * 100, 1),
-                    'url' : st.session_state.sim_actor_url,
-                }
-                run_component(props)
+            before = 'https://sharer.kakao.com/talk/friends/picker/easylink?app_key=228dd3487cef9cea56763dc2d68219c5&ka=sdk%2F1.42.0%20os%2Fjavascript%20sdk_type%2Fjavascript%20lang%2Fen-US%20device%2FWin32%20origin%2Fhttp%253A%252F%252F49.50.164.49%253A30001&validation_action=custom&validation_params=%7B%22link_ver%22%3A%224.0%22%2C%22template_id%22%3A77894%2C%22template_args%22%3A%7B%22THU%22%3A%22'
+            stringjson = st.session_state.sim_actor_url + '","PER":' + str(round(st.session_state.sim_percent * 100, 1)) + ',"ACTOR":"' + st.session_state.sim_actor_nm + '"}}'
+            url_json = parse.quote(stringjson)
+            result = before + url_json
+            markdown_string = "[![카카오톡 로고]("
+            icon_url = "https://storage.googleapis.com/bitcoin_images_storage/kakaoshare40.png"
+            connect = ")]("
+            share_link = result
+            end = ")"
+            st.markdown(markdown_string + icon_url + connect + share_link + end)            
             
         with test:
             refresh_btn = st.button('처음부터 다시하기')
