@@ -11,6 +11,7 @@ Web_Part/models/beautygan/__pycache__
 Web_Part/models/efficientnet/__pycache__
 Web_Part/front_streamlit/__pycache__
 Web_Part/back_fastapi/app/__pycache__
+Web_Part/frontend/__pycache__
 Web_Part/back_fastapi/app/routers/__pycache__
 Web_Part/__pycache__
 Web_Part/online_service_logger.json

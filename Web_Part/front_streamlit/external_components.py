@@ -230,12 +230,23 @@ def template_album():
 #     </style>""", unsafe_allow_html=True)
 
 
-def footer_button(link):
+def footer_button(link, text, classname):
+    if text == '카카오톡 공유하기':
+        return f"""
+        <div class="btn-footer kakao-image-wrapper">
+            <img class="kakao-image" src="https://storage.googleapis.com/bitcoin_images_storage/kakatalk_logo.png" />
+            <a class="{classname[0]}" href="{link}">
+            <span class="{classname[1]}">
+            {text}
+            </span>
+            </a>
+        </div>
+        """
     return f"""
     <div class="btn-footer">
-        <a class="google-form-button" href="{link}">
-        <span class="google-form-button-text">
-        설문지 작성
+        <a class="{classname[0]}" href="{link}">
+        <span class="{classname[1]}">
+        {text}
         </span>
         </a>
     </div>
