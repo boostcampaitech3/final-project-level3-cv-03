@@ -143,6 +143,7 @@ def main():
             st.session_state.uploaded_file = True
             image_bytes = uploaded_file.getvalue()
             image = Image.open(io.BytesIO(image_bytes))
+            image = image.convert("RGB")
             image_exif = image.getexif()
             if image_exif:
                 exif = dict(image_exif.items())
